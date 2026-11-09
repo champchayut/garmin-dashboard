@@ -1,0 +1,116 @@
+/* iOS portrait + landscape chart compatibility */
+:root {
+  --ios-safe-top: env(safe-area-inset-top, 0px);
+  --ios-safe-right: env(safe-area-inset-right, 0px);
+  --ios-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --ios-safe-left: env(safe-area-inset-left, 0px);
+}
+
+html, body {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  padding-left: var(--ios-safe-left);
+  padding-right: var(--ios-safe-right);
+  padding-bottom: var(--ios-safe-bottom);
+}
+
+.page,
+.page.active,
+.grid,
+.training-main,
+.card,
+.chart,
+.svg-chart {
+  min-width: 0 !important;
+}
+
+/* Canvas needs a real parent height in Safari. */
+.chart,
+.svg-chart {
+  position: relative;
+  width: 100% !important;
+  min-height: 260px !important;
+  height: clamp(260px, 42dvh, 520px) !important;
+  overflow: hidden;
+}
+
+.chart canvas,
+.svg-chart canvas,
+canvas.chart,
+canvas {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+/* iPhone portrait */
+@media (max-width: 600px) and (orientation: portrait) {
+  .page.active {
+    width: 100% !important;
+    height: auto !important;
+    min-height: calc(100dvh - var(--ios-safe-top) - var(--ios-safe-bottom)) !important;
+    overflow: visible !important;
+  }
+
+  .grid,
+  .training-main {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .grid > .card,
+  .training-main > .card,
+  .card {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .chart,
+  .svg-chart {
+    min-height: 250px !important;
+    height: clamp(250px, 38dvh, 390px) !important;
+    aspect-ratio: auto !important;
+  }
+
+  /* Donut charts should stay square and readable. */
+  #recovery .card:has(#cLevel) > .chart,
+  .chart:has(canvas[id*="Level"]),
+  .chart:has(canvas[id*="Donut"]) {
+    width: min(100%, 290px) !important;
+    height: min(72vw, 290px) !important;
+    min-height: 220px !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+}
+
+/* iPhone landscape */
+@media (max-height: 600px) and (orientation: landscape) {
+  .page.active {
+    width: 100% !important;
+    min-height: calc(100dvh - var(--ios-safe-top) - var(--ios-safe-bottom)) !important;
+  }
+
+  .chart,
+  .svg-chart {
+    min-height: 220px !important;
+    height: clamp(220px, 62dvh, 390px) !important;
+    aspect-ratio: auto !important;
+  }
+}
