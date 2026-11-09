@@ -1,58 +1,56 @@
-/* REPLACEMENT FILE: iOS portrait and landscape support */
+/* REPLACEMENT FILE: iOS portrait-first responsive layout */
 :root {
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
+  --mobile-gap: 12px;
+  --mobile-pad: 12px;
+  --mobile-chart-height: clamp(250px, 72vw, 330px);
 }
 
-html,
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
 body {
   width: 100%;
   min-width: 0;
-  max-width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   min-height: 100dvh;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  box-sizing: border-box;
+  margin: 0;
+  overflow-x: clip;
+  padding-left: var(--safe-left);
   padding-right: var(--safe-right);
   padding-bottom: var(--safe-bottom);
-  padding-left: var(--safe-left);
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
+img, svg, canvas { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
 
-#workspace,
-main,
-.page,
-.page.active,
-.grid,
-.twocol,
-.training-main,
-.card,
-.chart,
-.svg-chart {
+#workspace, main, .page, .page.active, .grid, .twocol,
+.training-main, .overview-chart-row, .fit-overview-row,
+.performance-layout, .card, .chart, .svg-chart {
   min-width: 0 !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
-/* Do not absolutely position every canvas. Chart.js controls its own canvas. */
-.chart,
-.svg-chart {
+.chart, .svg-chart {
   position: relative !important;
   width: 100% !important;
-  min-height: 280px !important;
   height: 320px !important;
+  min-height: 260px !important;
   max-height: none !important;
   overflow: hidden !important;
   aspect-ratio: auto !important;
+  contain: layout paint;
 }
-
-.chart canvas,
-.svg-chart canvas {
+.chart canvas, .svg-chart canvas {
   display: block !important;
   width: 100% !important;
   height: 100% !important;
@@ -60,10 +58,11 @@ main,
   max-height: 100% !important;
 }
 
-/* iPhone portrait: replace multi-column desktop rules with one real column. */
-@media screen and (max-width: 700px) and (orientation: portrait) {
-  #workspace,
-  main {
+/* Real iPhone portrait layout, including narrow in-app Safari/WebView widths. */
+@media screen and (max-width: 767px) {
+  body { padding-top: var(--safe-top); }
+
+  #workspace, main {
     display: block !important;
     width: 100% !important;
     height: auto !important;
@@ -71,38 +70,32 @@ main,
     overflow: visible !important;
   }
 
-  .page {
-    display: none !important;
-  }
-
+  .page { display: none !important; }
   .page.active {
     display: block !important;
     width: 100% !important;
     height: auto !important;
     min-height: calc(100dvh - var(--safe-top) - var(--safe-bottom)) !important;
+    padding: var(--mobile-pad) !important;
     overflow: visible !important;
   }
 
-  .page.active > .grid,
-  .page.active .grid,
-  .page.active .twocol,
-  .page.active .training-main,
-  .page.active .overview-chart-row,
-  .page.active .fit-overview-row,
-  .page.active .performance-layout {
+  .page.active > .grid, .page.active .grid, .page.active .twocol,
+  .page.active .training-main, .page.active .overview-chart-row,
+  .page.active .fit-overview-row, .page.active .performance-layout {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
     grid-template-rows: none !important;
     grid-auto-flow: row !important;
     grid-auto-rows: auto !important;
+    gap: var(--mobile-gap) !important;
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
     overflow: visible !important;
   }
 
-  .page.active .card,
-  .page.active .grid > .card,
+  .page.active .card, .page.active .grid > .card,
   .page.active .training-main > .card {
     grid-column: 1 / -1 !important;
     grid-row: auto !important;
@@ -110,60 +103,92 @@ main,
     height: auto !important;
     min-width: 0 !important;
     min-height: 0 !important;
-    overflow: visible !important;
-  }
-
-  .page.active .chart,
-  .page.active .svg-chart {
-    width: 100% !important;
-    height: 300px !important;
-    min-height: 300px !important;
-    max-height: 300px !important;
+    margin: 0 !important;
     overflow: hidden !important;
-    aspect-ratio: auto !important;
   }
 
-  /* Timeline needs more vertical room than a normal chart. */
-  #training .card:has(#trainingStatusTimeline),
-  #trainingStatusTimeline {
+  /* Prevent long labels and headings from forcing horizontal overflow. */
+  .page.active h1, .page.active h2, .page.active h3,
+  .page.active p, .page.active span, .page.active .legend,
+  .page.active .chart-legend-note {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .page.active .chart, .page.active .svg-chart {
     width: 100% !important;
-    height: 360px !important;
-    min-height: 360px !important;
-    max-height: none !important;
+    height: var(--mobile-chart-height) !important;
+    min-height: 250px !important;
+    max-height: 330px !important;
+    overflow: hidden !important;
   }
 
-  /* Readiness heading first, donut below-left, legend below it. */
+  /* Horizontal tab row remains usable without squeezing labels. */
+  .tabs, .tab-list, [role="tablist"] {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar, .tab-list::-webkit-scrollbar,
+  [role="tablist"]::-webkit-scrollbar { display: none; }
+  .tab, .nav-item, [role="tab"] {
+    flex: 0 0 auto !important;
+    min-height: 44px;
+    scroll-snap-align: start;
+  }
+
+  #training .card:has(#trainingStatusTimeline), #trainingStatusTimeline {
+    width: 100% !important;
+    height: clamp(340px, 100vw, 430px) !important;
+    min-height: 340px !important;
+    max-height: 430px !important;
+  }
+
+  /* Readiness: heading, donut, then legend in portrait. */
   #recovery .card:has(#cLevel) {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
     grid-template-rows: auto auto auto !important;
+    align-items: start !important;
     height: auto !important;
   }
-
   #recovery .card:has(#cLevel) > h3,
   #recovery .card:has(#cLevel) > .chart,
   #recovery .card:has(#cLevel) > .chart-legend-note {
     grid-column: 1 !important;
     grid-row: auto !important;
   }
-
   #recovery .card:has(#cLevel) > .chart {
     justify-self: start !important;
-    width: min(100%, 290px) !important;
-    height: min(76vw, 290px) !important;
-    min-height: 230px !important;
-    max-height: 290px !important;
+    width: min(100%, 280px) !important;
+    height: min(74vw, 280px) !important;
+    min-height: 220px !important;
+    max-height: 280px !important;
     aspect-ratio: 1 / 1 !important;
   }
 }
 
-/* iPhone landscape */
+@media screen and (max-width: 390px) {
+  :root { --mobile-pad: 10px; --mobile-gap: 10px; }
+  .page.active .chart, .page.active .svg-chart {
+    height: clamp(240px, 76vw, 300px) !important;
+    min-height: 240px !important;
+    max-height: 300px !important;
+  }
+}
+
 @media screen and (max-height: 700px) and (orientation: landscape) {
-  .page.active .chart,
-  .page.active .svg-chart {
+  .page.active .chart, .page.active .svg-chart {
     height: 280px !important;
-    min-height: 280px !important;
-    max-height: 360px !important;
-    aspect-ratio: auto !important;
+    min-height: 260px !important;
+    max-height: 340px !important;
   }
 }
