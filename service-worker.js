@@ -1,4 +1,4 @@
-const CACHE_NAME = "garmin-dashboard-v5";
+const CACHE_NAME = "garmin-dashboard-v6";
 
 const APP_FILES = [
   "./",
