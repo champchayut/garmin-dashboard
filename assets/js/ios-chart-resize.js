@@ -1,48 +1,79 @@
-/* REPLACEMENT FILE: preserve all tab hints and resize visible charts only. */
+/* REPLACEMENT FILE: reliable visible-chart resize for iOS portrait */
 (() => {
   "use strict";
 
-  let resizeTimer = 0;
+  let frame = 0;
+  let timer = 0;
+  const observed = new WeakSet();
 
-  function getVisibleCharts() {
-    return Array.from(document.querySelectorAll(".page.active canvas"))
-      .filter(canvas => canvas.offsetParent !== null);
+  const visibleCanvases = () => Array.from(
+    document.querySelectorAll(".page.active canvas")
+  ).filter(canvas => {
+    const rect = canvas.getBoundingClientRect();
+    return canvas.offsetParent !== null && rect.width > 0 && rect.height > 0;
+  });
+
+  function resizeCanvas(canvas) {
+    const holder = canvas.closest(".chart, .svg-chart") || canvas.parentElement;
+    if (!holder) return;
+    const rect = holder.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    if (width < 2 || height < 2) return;
+
+    if (window.Chart && typeof window.Chart.getChart === "function") {
+      const chart = window.Chart.getChart(canvas);
+      if (chart) {
+        chart.resize(width, height);
+        chart.update("none");
+      }
+    }
   }
 
-  function resizeVisibleCharts(delay = 80) {
-    window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => {
-      getVisibleCharts().forEach(canvas => {
-        const holder = canvas.closest(".chart, .svg-chart") || canvas.parentElement;
-        if (!holder) return;
-
-        const width = Math.max(1, Math.round(holder.getBoundingClientRect().width));
-        const height = Math.max(1, Math.round(holder.getBoundingClientRect().height));
-
-        if (window.Chart && typeof window.Chart.getChart === "function") {
-          const chart = window.Chart.getChart(canvas);
-          if (chart) {
-            chart.resize(width, height);
-            chart.update("none");
-          }
-        }
-      });
+  function resizeVisibleCharts(delay = 60) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => visibleCanvases().forEach(resizeCanvas));
     }, delay);
   }
 
   function resizeSequence() {
     resizeVisibleCharts(0);
-    window.setTimeout(() => resizeVisibleCharts(0), 180);
-    window.setTimeout(() => resizeVisibleCharts(0), 500);
+    setTimeout(() => resizeVisibleCharts(0), 120);
+    setTimeout(() => resizeVisibleCharts(0), 350);
+    setTimeout(() => resizeVisibleCharts(0), 800);
   }
 
-  window.addEventListener("load", resizeSequence, { once: true });
+  function observeChartHolders() {
+    if (!("ResizeObserver" in window)) return;
+    const observer = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        const canvas = entry.target.querySelector("canvas");
+        if (canvas && entry.contentRect.width > 1 && entry.contentRect.height > 1) {
+          resizeVisibleCharts(30);
+        }
+      });
+    });
+    document.querySelectorAll(".chart, .svg-chart").forEach(holder => {
+      if (!observed.has(holder)) {
+        observed.add(holder);
+        observer.observe(holder);
+      }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    observeChartHolders();
+    resizeSequence();
+  }, { once: true });
   window.addEventListener("pageshow", resizeSequence);
   window.addEventListener("orientationchange", resizeSequence);
-  window.addEventListener("resize", () => resizeVisibleCharts(120));
+  window.addEventListener("resize", () => resizeVisibleCharts(100), { passive: true });
 
   if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", () => resizeVisibleCharts(120));
+    window.visualViewport.addEventListener("resize", () => resizeVisibleCharts(100), { passive: true });
+    window.visualViewport.addEventListener("scroll", () => resizeVisibleCharts(100), { passive: true });
   }
 
   document.addEventListener("visibilitychange", () => {
@@ -51,10 +82,21 @@
 
   document.addEventListener("click", event => {
     if (event.target.closest(".tab, [role='tab'], .nav-item")) {
-      window.setTimeout(resizeSequence, 60);
+      setTimeout(() => {
+        observeChartHolders();
+        resizeSequence();
+      }, 50);
     }
   });
 
-  /* Intentionally do not remove or rewrite title attributes.
-     Existing tab hints remain exactly as defined in index.html/app.js. */
+  /* Resize after the active page class changes, without touching tab hints. */
+  const mutationObserver = new MutationObserver(mutations => {
+    if (mutations.some(m => m.type === "attributes" && m.attributeName === "class")) {
+      observeChartHolders();
+      resizeSequence();
+    }
+  });
+  document.querySelectorAll(".page").forEach(page => {
+    mutationObserver.observe(page, { attributes: true, attributeFilter: ["class"] });
+  });
 })();
