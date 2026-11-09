@@ -1,4 +1,4 @@
-const CACHE_NAME = "garmin-dashboard-v6";
+const CACHE_NAME = "garmin-dashboard-v7";
 
 const APP_FILES = [
   "./",
@@ -8,7 +8,7 @@ const APP_FILES = [
   "./assets/css/ios-responsive.css",
   "./assets/js/app.js",
   "./assets/js/weekly-plan.js",
-  "./assets/js/ios-chart-resize.js",
+  "./assets/js/ios-mobile-ui.js",
   "./assets/icons/favicon-32.png",
   "./assets/icons/favicon-64.png",
   "./assets/icons/icon-192.png",
