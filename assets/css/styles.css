@@ -1,0 +1,4195 @@
+:root {
+  --bg: #0f1011;
+  --panel: #17181a;
+  --panel2: #111214;
+  --line: #292b2f;
+  --text: #e5e7eb;
+  --muted: #818895;
+  --cyan: #12c4df;
+  --green: #39d98a;
+  --blue: #45a7ff;
+  --yellow: #ffc857;
+  --red: #ff6680;
+  --purple: #a78bfa;
+}
+
+* {
+  box-sizing: border-box;
+  min-width: 0
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif
+}
+
+button,
+select,
+input {
+  font: inherit
+}
+
+button,
+select,
+label[for],
+.tab,
+.iconbtn,
+.chart-legend-note span {
+  cursor: pointer
+}
+
+.hidden,
+.dynamic-hidden {
+  display: none !important
+}
+
+/* Header */
+header {
+  height: 58px;
+  background: #101112;
+  border-bottom: 1px solid #25272a
+}
+
+.head {
+  height: 58px;
+  padding: 0 14px;
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr) 150px;
+  align-items: center;
+  gap: 12px
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px
+}
+
+.logo {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #18c4df, #57a8fa);
+  font-size: 24px
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap
+}
+
+.sub {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #6d727c
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 3px;
+  background: #111214
+}
+
+.tab {
+  border: 0;
+  background: transparent;
+  color: #7f8590;
+  padding: 7px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 11px
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #18c4df, #57a8fa);
+  color: #fff;
+  font-weight: 700
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px
+}
+
+.iconbtn {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid #2b2e32;
+  border-radius: 11px;
+  background: #131416;
+  color: #aeb2ba
+}
+
+.iconbtn:hover {
+  color: var(--cyan);
+  border-color: #11798a
+}
+
+.iconbtn.danger:hover {
+  color: #ff6572;
+  border-color: #8a3038
+}
+
+.iconbtn svg,
+.upload-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round
+}
+
+.iconbtn input {
+  display: none
+}
+
+/* Upload */
+#uploadScreen {
+  height: calc(100vh - 58px);
+  display: grid;
+  place-items: center;
+  padding: 22px
+}
+
+.upload-box {
+  position: relative;
+  width: min(720px, 100%);
+  padding: 42px 28px;
+  text-align: center;
+  border: 1px dashed #3a5960;
+  border-radius: 15px;
+  background: #141517;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  overflow: hidden;
+  cursor: pointer
+}
+
+.upload-box:hover {
+  border-color: #20d8f2;
+  box-shadow: 0 0 24px #12c4df20
+}
+
+.upload-icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: var(--cyan);
+  background: #102b30
+}
+
+.upload-icon svg {
+  width: 29px;
+  height: 29px
+}
+
+.upload-box strong {
+  font-size: 18px
+}
+
+.upload-box small,
+#status {
+  color: #777b84
+}
+
+.upload-box #folderHero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3
+}
+
+.upload-box>*:not(#folderHero) {
+  pointer-events: none
+}
+
+.has-data #uploadScreen {
+  display: none
+}
+
+.no-data #workspace,
+.no-data .actions,
+.no-data .tabs {
+  display: none !important
+}
+
+/* Shell and filters */
+#workspace {
+  height: calc(100vh - 58px);
+  display: grid;
+  grid-template-columns: 255px minmax(0, 1fr);
+  overflow: hidden
+}
+
+#filterPanel {
+  background: #111214;
+  border-right: 1px solid var(--line);
+  padding: 12px;
+  overflow: auto
+}
+
+.filter-head {
+  padding: 4px 2px 12px;
+  border-bottom: 1px solid var(--line)
+}
+
+.filter-head b {
+  display: block;
+  font-size: 15px;
+  line-height: 1.25
+}
+
+.filter-head small {
+  color: #747780;
+  font-size: 10px
+}
+
+.afield {
+  margin-top: 11px
+}
+
+.afield label {
+  display: block;
+  color: #858b96;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 5px
+}
+
+.afield select,
+.afield input,
+.afield button {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #2b2e32;
+  border-radius: 8px;
+  background: #151618;
+  color: #ddd;
+  padding: 6px 9px
+}
+
+.afield select,
+.afield input {
+  font-size: 13px;
+  color-scheme: dark
+}
+
+.afield input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(.78);
+  opacity: .8;
+  cursor: pointer
+}
+
+.afield input[type=date]:focus {
+  border-color: #45a7ff;
+  outline: none;
+  box-shadow: 0 0 0 2px #45a7ff24
+}
+
+.afield button {
+  color: #b7bbc3
+}
+
+.no-filter {
+  display: none !important
+}
+
+main {
+  height: 100%;
+  padding: 10px 12px;
+  overflow: hidden
+}
+
+.page {
+  display: none;
+  width: 100%;
+  height: 100%
+}
+
+.page.active {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.grid {
+  display: grid;
+  gap: 8px
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  overflow: hidden
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.25
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex: 0 0 auto
+}
+
+.card-head span {
+  color: #818895;
+  font-size: 10px
+}
+
+.kpis {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
+}
+
+.kpi {
+  min-height: 86px;
+  padding: 11px
+}
+
+.kpi .label {
+  font-size: 10px;
+  color: var(--muted)
+}
+
+.kpi .val {
+  font-size: clamp(18px, 1.55vw, 25px);
+  font-weight: 800;
+  margin: 6px 0
+}
+
+.kpi .foot {
+  font-size: 9px;
+  color: var(--muted)
+}
+
+.good {
+  color: var(--green)
+}
+
+.mid {
+  color: var(--yellow)
+}
+
+.bad {
+  color: var(--red)
+}
+
+.chart {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0
+}
+
+.chart canvas {
+  width: 100% !important;
+  height: 100% !important;
+  contain: layout paint;
+  cursor: crosshair
+}
+
+.twocol {
+  grid-template-columns: repeat(2, minmax(0, 1fr))
+}
+
+.legend {
+  display: none
+}
+
+.chart-legend-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1px 0 7px;
+  color: #a1a6af;
+  font-size: 10px
+}
+
+.chart-legend-note span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  border-radius: 6px
+}
+
+.chart-legend-note span:hover {
+  background: #ffffff0d;
+  border-color: #ffffff1f
+}
+
+.chart-legend-note span.legend-off {
+  opacity: .35;
+  text-decoration: line-through
+}
+
+.chart-legend-note i {
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  display: inline-block
+}
+
+/* Overview: stable two-column layout */
+#overview.page.active {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px
+}
+
+#overview .fit-overview-row {
+  display: contents
+}
+
+#overview .fit-overview-row>.card:first-child {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0
+}
+
+#overview #kpis {
+  grid-column: 5 / span 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(82px, auto));
+  align-self: start
+}
+
+#overview .fit-overview-row>.card:nth-child(2) {
+  grid-column: 4 / span 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0
+}
+
+#overview .fit-overview-row>.card:nth-child(2)>h3 {
+  text-align: left;
+  align-self: stretch
+}
+
+#overview .overview-chart-row {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  min-height: 0
+}
+
+#overview .overview-chart-row .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column
+}
+
+.overview-chart-row .chart {
+  min-height: 190px
+}
+
+#activityContributions {
+  display: grid;
+  flex: 1 1 auto;
+  min-height: 110px;
+  margin-top: 10px;
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 3px;
+  align-content: stretch
+}
+
+#activityContributions i {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: #2f3339;
+  cursor: pointer;
+  transition: filter .12s ease, transform .12s ease
+}
+
+#activityContributions i.lv1 {
+  background: #08798a !important
+}
+
+#activityContributions i.lv2 {
+  background: #08a9bf !important
+}
+
+#activityContributions i.lv3 {
+  background: #13d0e7 !important
+}
+
+#activityContributions i.lv4 {
+  background: #75f1ff !important
+}
+
+#activityContributions i:hover {
+  filter: brightness(1.7);
+  transform: scale(1.08);
+  z-index: 2
+}
+
+.type-layout {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin: auto;
+  width: min(100%, 520px);
+  flex: 1
+}
+
+.activity-donut {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  position: relative;
+  background: #303338
+}
+
+.activity-donut:after {
+  content: "";
+  position: absolute;
+  inset: 29px;
+  background: var(--panel);
+  border-radius: 50%
+}
+
+.activity-donut b {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-size: 18px
+}
+
+.activity-donut small {
+  display: block;
+  color: #858892;
+  font-size: 9px
+}
+
+.type-legend {
+  display: grid;
+  gap: 6px
+}
+
+.type-legend div {
+  display: grid;
+  grid-template-columns: 9px 1fr auto;
+  gap: 6px;
+  font-size: 10px
+}
+
+.type-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px
+}
+
+/* Standard chart pages */
+#sleep>.grid,
+#recovery>.grid,
+#fitness>.grid {
+  height: 100%;
+  grid-template-rows: repeat(2, minmax(0, 1fr))
+}
+
+#sleep .card,
+#recovery .card,
+#fitness .card,
+#running .card,
+#race>.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0
+}
+
+/* Activities and Race: compact KPI rail, vertically centered */
+#running.page.active,
+#race.page.active {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 10px
+}
+
+#race.page.active {
+  overflow: hidden
+}
+
+#race>.card {
+  min-width: 0;
+  min-height: 0;
+  height: 100%
+}
+
+#race>.card .chart {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0
+}
+
+#race #cRace {
+  width: 100% !important;
+  height: 100% !important
+}
+
+#running #runKpis,
+#race #raceKpis {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: none;
+  grid-auto-rows: minmax(76px, auto);
+  align-content: center;
+  gap: 8px;
+  height: 100%;
+  overflow: visible
+}
+
+#running #runKpis .kpi,
+#race #raceKpis .kpi {
+  width: 170px;
+  height: auto;
+  min-height: 76px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center
+}
+
+#running #runKpis .label,
+#running #runKpis .val,
+#running #runKpis .foot,
+#race #raceKpis .label,
+#race #raceKpis .val,
+#race #raceKpis .foot {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+#running>.grid.twocol {
+  grid-column: 5 / span 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  height: 100%;
+  min-height: 0
+}
+
+#race>.card {
+  grid-column: 5 / span 2;
+  grid-row: 1;
+  height: 100%;
+  min-height: 0
+}
+
+.race-selected {
+  border-color: var(--race-color) !important;
+  box-shadow: 0 0 0 2px var(--race-color), 0 0 13px color-mix(in srgb, var(--race-color) 35%, transparent) !important
+}
+
+/* Data table and tooltips */
+.tablewrap {
+  overflow: auto;
+  max-height: 430px
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px
+}
+
+th,
+td {
+  padding: 9px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: #102238;
+  color: #adcae4
+}
+
+.notice {
+  font-size: 12px;
+  color: #a9bfd4;
+  line-height: 1.6
+}
+
+.privacy {
+  color: #71dfb0
+}
+
+.chart-hover-value,
+.ui-tip {
+  position: fixed;
+  z-index: 10000;
+  display: none;
+  pointer-events: none;
+  max-width: 280px;
+  padding: 8px 10px;
+  border: 1px solid #3d5569;
+  border-radius: 8px;
+  background: #0c131bf2;
+  color: #eef6ff;
+  font-size: 11px;
+  line-height: 1.4;
+  box-shadow: 0 8px 24px #0009
+}
+
+.chart-hover-value b {
+  display: block;
+  margin-bottom: 3px
+}
+
+.chart-hover-value span {
+  display: block;
+  white-space: nowrap
+}
+
+.chart-hover-value i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px
+}
+
+.ui-tip {
+  transform: none;
+  margin-top: 0
+}
+
+.chart-crosshair-x,
+.chart-crosshair-y {
+  position: absolute;
+  z-index: 6;
+  display: none;
+  pointer-events: none;
+  border-color: #a9dbe5;
+  border-style: dashed;
+  opacity: .72
+}
+
+.chart-crosshair-x {
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-width: 0 0 0 1px
+}
+
+.chart-crosshair-y {
+  left: 0;
+  right: 0;
+  height: 0;
+  border-width: 1px 0 0
+}
+
+@media(max-width:1250px) {
+  .head {
+    grid-template-columns: 250px minmax(0, 1fr) 140px
+  }
+
+  .tab {
+    padding: 7px 8px
+  }
+
+  #workspace {
+    grid-template-columns: 220px minmax(0, 1fr)
+  }
+}
+
+@media(max-width:950px) {
+  #overview.page.active {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    overflow: auto
+  }
+
+  #overview .fit-overview-row>.card:first-child,
+  #overview #kpis,
+  #overview .fit-overview-row>.card:nth-child(2),
+  #overview .overview-chart-row {
+    grid-column: 1;
+    grid-row: auto
+  }
+
+  #running.page.active,
+  #race.page.active {
+    grid-template-columns: 154px minmax(0, 1fr)
+  }
+
+  #running #runKpis .kpi,
+  #race #raceKpis .kpi {
+    width: 154px
+  }
+
+  #running>.grid.twocol {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(220px, 1fr));
+    overflow: auto
+  }
+
+  .head {
+    grid-template-columns: 220px minmax(0, 1fr) 130px
+  }
+
+  .title {
+    font-size: 13px
+  }
+}
+
+@media(max-width:760px) {
+
+  html,
+  body {
+    overflow: auto
+  }
+
+  header {
+    height: auto
+  }
+
+  .head {
+    height: auto;
+    min-height: 58px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    padding: 8px 12px
+  }
+
+  .tabs {
+    grid-column: 1/-1;
+    grid-row: 2;
+    justify-content: flex-start;
+    overflow: auto
+  }
+
+  .actions {
+    grid-column: 5 / span 2;
+    grid-row: 1
+  }
+
+  #workspace {
+    height: auto;
+    min-height: calc(100vh - 100px);
+    grid-template-columns: 1fr
+  }
+
+  #filterPanel {
+    border-right: 0;
+    border-bottom: 1px solid var(--line)
+  }
+
+  main {
+    height: auto;
+    overflow: visible
+  }
+
+  .page.active {
+    height: auto
+  }
+
+  #running.page.active,
+  #race.page.active {
+    display: flex;
+    flex-direction: column
+  }
+
+  #running #runKpis,
+  #race #raceKpis {
+    width: 100%;
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto
+  }
+
+  #running #runKpis .kpi,
+  #race #raceKpis .kpi {
+    width: 100%
+  }
+
+  .twocol {
+    grid-template-columns: 1fr
+  }
+}
+
+/* Data Check: hide the filter column and use the full workspace width. */
+#workspace:has(#data.page.active) {
+  grid-template-columns: minmax(0, 1fr)
+}
+
+#workspace:has(#data.page.active) #filterPanel {
+  display: none
+}
+
+
+/* Full Revision v5 */
+#workspace {
+  grid-template-columns: 210px minmax(0, 1fr)
+}
+
+#training.page.active {
+  display: grid;
+  grid-template-columns: 175px minmax(0, 1fr);
+  gap: 10px;
+  overflow: hidden
+}
+
+.training-kpis {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-content: start;
+  overflow: auto
+}
+
+.training-kpis .kpi {
+  min-height: 100px;
+  padding: 10px
+}
+
+.training-kpis .val {
+  font-size: 18px
+}
+
+.training-main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+  min-height: 0
+}
+
+.training-main>.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0
+}
+
+.training-contributions {
+  --weeks: 52;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, minmax(7px, 1fr));
+  grid-template-columns: repeat(var(--weeks), minmax(5px, 1fr));
+  gap: 3px;
+  flex: 1;
+  min-height: 55px
+}
+
+.status-box {
+  border-radius: 3px;
+  background: #30343b;
+  cursor: pointer;
+  transition: filter .15s, transform .15s
+}
+
+.status-box:hover {
+  filter: brightness(1.7);
+  transform: scale(1.13);
+  z-index: 2
+}
+
+.status-box.productive {
+  background: #39d98a
+}
+
+.status-box.maintaining {
+  background: #45a7ff
+}
+
+.status-box.recovery {
+  background: #48d6d2
+}
+
+.status-box.peaking {
+  background: #a78bfa
+}
+
+.status-box.overreaching {
+  background: #ff6680
+}
+
+.status-box.detraining {
+  background: #ffc857
+}
+
+.status-box.empty {
+  opacity: .5
+}
+
+.status-legend,
+.metric-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  color: #a1a6af;
+  font-size: 10px;
+  margin-bottom: 6px
+}
+
+.status-legend span,
+.metric-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: help
+}
+
+.status-legend i,
+.metric-legend i {
+  width: 10px;
+  height: 4px;
+  border-radius: 2px
+}
+
+.factor-list {
+  display: grid;
+  grid-template-rows: auto repeat(6, minmax(0, 1fr));
+  gap: 5px;
+  flex: 1;
+  min-height: 0
+}
+
+.contributors-date {
+  font-size: 10px;
+  color: #8fa6ba;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #292b2f
+}
+
+.contributors-date b {
+  color: #dce8f2;
+  font-weight: 600
+}
+
+.factor {
+  display: grid;
+  align-content: center;
+  cursor: help
+}
+
+.factor>div:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #a1a6af
+}
+
+.factor b {
+  color: #fff
+}
+
+.factor-track {
+  height: 6px;
+  background: #2c333c;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 3px
+}
+
+.factor-track i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #45a7ff, #39d98a)
+}
+
+.svg-chart {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0
+}
+
+.svg-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0
+}
+
+.svg-chart svg {
+  width: 100%;
+  height: 100%;
+  min-height: 150px
+}
+
+.svg-chart path {
+  fill: none;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke
+}
+
+.svg-chart .gridlines line {
+  stroke: #29455e;
+  vector-effect: non-scaling-stroke
+}
+
+.svg-chart text {
+  fill: #8ca5bd;
+  font-size: 15px
+}
+
+.training-chart-tip {
+  position: absolute;
+  z-index: 10;
+  display: none;
+  min-width: 150px;
+  padding: 8px 10px;
+  border: 1px solid #385068;
+  border-radius: 8px;
+  background: #0e141aee;
+  color: #cfdae5;
+  font-size: 11px;
+  pointer-events: none;
+  box-shadow: 0 8px 24px #0008
+}
+
+.training-chart-tip b {
+  color: #fff
+}
+
+.training-chart-tip span {
+  display: flex;
+  align-items: center;
+  gap: 6px
+}
+
+.training-chart-tip i {
+  width: 9px;
+  height: 4px;
+  border-radius: 2px
+}
+
+.no-metric {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--muted)
+}
+
+.hint-dot {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  padding: 0;
+  border: 1px solid #4b5662;
+  border-radius: 50%;
+  background: #20252b;
+  color: #9db3c7;
+  font: 700 10px/1 sans-serif;
+  cursor: help
+}
+
+.hint-dot:hover {
+  color: var(--cyan);
+  border-color: var(--cyan)
+}
+
+.kpi .label {
+  display: flex;
+  align-items: center
+}
+
+#data .hint-dot {
+  display: none !important
+}
+
+@media(max-width:1250px) {
+  #workspace {
+    grid-template-columns: 190px minmax(0, 1fr)
+  }
+
+  #training.page.active {
+    grid-template-columns: 160px minmax(0, 1fr)
+  }
+
+  .training-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(235px, 1fr));
+    overflow: auto
+  }
+}
+
+@media(max-width:760px) {
+  #workspace {
+    grid-template-columns: 1fr
+  }
+
+  #training.page.active {
+    display: flex;
+    overflow: auto
+  }
+
+  .training-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible
+  }
+
+  .training-main {
+    display: grid
+  }
+
+  .factor-list {
+    min-height: 150px
+  }
+
+  .svg-chart text {
+    font-size: 17px
+  }
+}
+
+
+/* Full Revision v6 corrections */
+.tab[data-tab-tip] {
+  position: relative
+}
+
+.tab[data-tab-tip]::after {
+  content: attr(data-tab-tip);
+  position: fixed;
+  top: 62px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  max-width: min(360px, calc(100vw - 24px));
+  padding: 7px 10px;
+  border: 1px solid #385068;
+  border-radius: 7px;
+  background: #10161ddd;
+  color: #e6edf4;
+  font-size: 11px;
+  line-height: 1.35;
+  white-space: normal;
+  z-index: 1000;
+  pointer-events: none
+}
+
+.tab[data-tab-tip]:hover::after {
+  display: none
+}
+
+#training.page.active {
+  grid-template-columns: 176px minmax(0, 1fr)
+}
+
+#trainingKpis {
+  overflow: hidden;
+  align-content: stretch;
+  grid-template-rows: repeat(5, minmax(0, 1fr))
+}
+
+#trainingKpis .kpi {
+  min-height: 0
+}
+
+.training-main {
+  min-width: 0;
+  overflow: hidden
+}
+
+.training-main>.card {
+  overflow: hidden
+}
+
+.svg-wrap {
+  overflow: hidden
+}
+
+.svg-cross-x,
+.svg-cross-y {
+  display: none;
+  stroke: #b8d5e8;
+  stroke-width: 1;
+  stroke-dasharray: 6 5;
+  opacity: .8;
+  vector-effect: non-scaling-stroke
+}
+
+.svg-dots circle {
+  vector-effect: non-scaling-stroke
+}
+
+.svg-chart svg {
+  overflow: hidden
+}
+
+.svg-chart text {
+  font-size: 14px
+}
+
+#running.page.active {
+  grid-template-columns: 238px minmax(0, 1fr);
+  gap: 6px;
+  overflow: hidden
+}
+
+#running #runKpis {
+  width: 238px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+  gap: 5px;
+  align-content: stretch;
+  overflow: hidden
+}
+
+#running #runKpis .activity-card-group {
+  display: grid;
+  grid-template-rows: auto repeat(6, minmax(0, 1fr));
+  gap: 4px;
+  align-content: stretch;
+  min-height: 0;
+  overflow: hidden
+}
+
+#running #runKpis h4 {
+  margin: 0;
+  padding: 2px;
+  color: #9ab0c4;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .6px
+}
+
+#running #runKpis .kpi {
+  width: auto;
+  min-height: 0;
+  padding: 6px 7px
+}
+
+#running #runKpis .val {
+  font-size: 17px;
+  margin: 3px 0
+}
+
+#running #runKpis .pace-card .val {
+  font-size: 13px;
+  white-space: nowrap;
+  letter-spacing: -.2px
+}
+
+#running #runKpis .label {
+  font-size: 10px
+}
+
+#running #runKpis .foot {
+  font-size: 8px
+}
+
+#running>.grid.twocol {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  gap: 6px
+}
+
+#running>.grid.twocol>.card {
+  min-height: 0
+}
+
+#running>.grid.twocol .chart {
+  height: 100%;
+  min-height: 0
+}
+
+#data .hint-dot {
+  display: none !important
+}
+
+@media(max-width:1250px) {
+  #running.page.active {
+    grid-template-columns: 220px minmax(0, 1fr)
+  }
+
+  #running #runKpis {
+    width: 220px
+  }
+
+  .svg-chart text {
+    font-size: 15px
+  }
+}
+
+@media(max-width:950px) {
+  #training.page.active {
+    grid-template-columns: 150px minmax(0, 1fr)
+  }
+
+  #trainingKpis .kpi {
+    padding: 8px
+  }
+
+  #trainingKpis .val {
+    font-size: 16px
+  }
+}
+
+@media(max-width:760px) {
+  #training.page.active {
+    display: flex
+  }
+
+  #trainingKpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    overflow: visible
+  }
+
+  #running.page.active {
+    display: flex
+  }
+
+  #running #runKpis {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+}
+
+
+/* Consolidated requested layout and interactions */
+.hint-dot,
+.factor,
+.status-legend span,
+.metric-legend span,
+[title] {
+  cursor: pointer !important
+}
+
+.tab[data-tab-tip]::after {
+  display: none !important
+}
+
+#training.page.active {
+  grid-template-columns: 150px minmax(0, 1fr)
+}
+
+#trainingKpis {
+  width: 150px
+}
+
+#trainingKpis .kpi {
+  width: 150px
+}
+
+#training .training-main {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px
+}
+
+#training .training-main>.card:nth-child(1) {
+  grid-column: 1 / span 4;
+  grid-row: 1
+}
+
+#training .training-main>.card:nth-child(2) {
+  grid-column: 5 / span 2;
+  grid-row: 1
+}
+
+#training .training-main>.card:nth-child(3) {
+  grid-column: 1 / span 3;
+  grid-row: 2
+}
+
+#training .training-main>.card:nth-child(4) {
+  grid-column: 4 / span 3;
+  grid-row: 2
+}
+
+#training .svg-chart {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%
+}
+
+#training .training-standard-chart {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%
+}
+
+#training .training-standard-chart canvas {
+  display: block;
+  width: 100%;
+  height: 100%
+}
+
+@media(max-width:760px) {
+  #training .training-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(260px, auto))
+  }
+
+  #training .training-main>.card:nth-child(n) {
+    grid-column: 1;
+    grid-row: auto
+  }
+}
+
+#activityContributions.timeline-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, minmax(7px, 1fr));
+  grid-template-columns: repeat(var(--weeks), minmax(5px, 1fr));
+  gap: 3px;
+  min-height: 55px
+}
+
+#activityContributions.timeline-grid i {
+  width: 100%;
+  height: 100%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 3px
+}
+
+#training .svg-chart text {
+  font-size: 16px !important
+}
+
+.chart-legend-note {
+  font-size: 11px
+}
+
+#recovery .card:has(#cLevel) {
+  display: grid;
+  grid-template-columns: minmax(150px, .9fr) minmax(130px, 1.1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: center
+}
+
+#recovery .card:has(#cLevel)>h3 {
+  grid-column: 1/-1
+}
+
+#recovery .card:has(#cLevel)>.chart-legend-note {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  margin: 0
+}
+
+#recovery .card:has(#cLevel)>.chart {
+  grid-column: 1;
+  grid-row: 2;
+  height: 100%;
+  min-height: 0
+}
+
+
+/* Requested changes only: hints, KPI alignment, and HR zone legend. */
+#filterPanel [title],
+#filterPanel .hint-dot {
+  pointer-events: none
+}
+
+#filterPanel .hint-dot {
+  display: none !important
+}
+
+#running.page.active,
+#race.page.active {
+  grid-template-columns: 260px minmax(0, 1fr);
+}
+
+#running #runKpis,
+#race #raceKpis {
+  width: 220px;
+  justify-self: center;
+  align-self: stretch;
+}
+
+#running .card:has(#cZones) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(118px, auto);
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: 8px;
+}
+
+#running .card:has(#cZones)>h3 {
+  grid-column: 1/-1;
+}
+
+#running .card:has(#cZones)>.chart {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+
+#running .card:has(#cZones)>.chart-legend-note {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+#running .card:has(#cZones)>.chart-legend-note span {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 9px;
+}
+
+@media(max-width:760px) {
+
+  #running.page.active,
+  #race.page.active {
+    display: flex
+  }
+
+  #running #runKpis,
+  #race #raceKpis {
+    width: min(100%, 440px);
+    align-self: center
+  }
+}
+
+
+/* Requested changes only: Activities card label wrapping and date font. */
+#running #runKpis .label {
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+#running #runKpis .label>span {
+  display: inline-block;
+}
+
+#running #runKpis .foot {
+  font-size: 10px;
+}
+
+/* Requested scoped adjustments only */
+#trainingKpis .label {
+  font-size: 12px !important
+}
+
+#trainingKpis .val {
+  font-size: 22px !important
+}
+
+#trainingKpis .foot {
+  font-size: 11px !important
+}
+
+#raceKpis .label {
+  font-size: 14px !important
+}
+
+#raceKpis .val {
+  font-size: 26px !important
+}
+
+#raceKpis .foot {
+  font-size: 12px !important
+}
+
+#trainingKpis .val.productive {
+  color: #39d98a !important
+}
+
+#trainingKpis .val.maintaining {
+  color: #45a7ff !important
+}
+
+#trainingKpis .val.recovery {
+  color: #48d6d2 !important
+}
+
+#trainingKpis .val.peaking {
+  color: #a78bfa !important
+}
+
+#trainingKpis .val.overreaching {
+  color: #ff6680 !important
+}
+
+#trainingKpis .val.detraining {
+  color: #ffc857 !important
+}
+
+#trainingKpis .kpi:first-child .val {
+  font-size: 16px !important;
+  line-height: 1.15;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word
+}
+
+#running .card:has(#cZones)>.chart-legend-note span {
+  font-size: 12px;
+  line-height: 1.25
+}
+
+#running .card:has(#cZones)>.chart-legend-note i {
+  width: 12px;
+  height: 5px
+}
+
+.performance-page {
+  gap: 12px;
+  max-width: 100%;
+  overflow-x: hidden
+}
+
+.performance-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(240px, .75fr);
+  gap: 12px;
+  min-width: 0
+}
+
+.performance-layout>* {
+  min-width: 0
+}
+
+.plan-step {
+  color: #8ba4c7;
+  font-size: 11px
+}
+
+.plan-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px
+}
+
+.plan-form-grid label {
+  position: relative;
+  display: block;
+  min-width: 0;
+  color: #8ba4c7;
+  font-size: 11px
+}
+
+.plan-form-grid input,
+.plan-form-grid select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 35px;
+  margin-top: 5px;
+  border: 1px solid #263a57;
+  border-radius: 8px;
+  background: #0c1727;
+  color: #e9f2ff;
+  padding: 7px 10px;
+  font-size: 12px
+}
+
+.input-unit {
+  position: relative;
+  display: block
+}
+
+.input-unit span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #6f89aa;
+  font-size: 10px
+}
+
+.input-unit input {
+  padding-right: 38px
+}
+
+.performance-page input[type=number]::-webkit-inner-spin-button,
+.performance-page input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0
+}
+
+.performance-page input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield
+}
+
+.plan-hint {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  padding: 0 !important;
+  margin-left: 3px !important;
+  border: 1px solid #3b82f6 !important;
+  border-radius: 50% !important;
+  background: #13253d !important;
+  color: #7fc8ff !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  visibility: visible !important;
+  opacity: 1 !important
+}
+
+.goal-meaning {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border: 1px solid #233852;
+  border-radius: 8px;
+  background: #0d1929;
+  color: #8fa8c8;
+  font-size: 10px
+}
+
+.available-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 13px 0 7px;
+  font-size: 12px
+}
+
+.available-title span {
+  color: #8ba4c7;
+  font-size: 11px
+}
+
+.available-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px
+}
+
+.available-days button {
+  min-width: 0;
+  border: 1px solid #29415f;
+  border-radius: 8px;
+  background: #0d192a;
+  color: #8fa8c8;
+  padding: 9px 2px;
+  font-weight: 700
+}
+
+.available-days button.selected {
+  border-color: #29c7ac;
+  background: rgba(41, 199, 172, .16);
+  color: #67f0d7
+}
+
+.plan-validation {
+  min-height: 18px;
+  margin-top: 8px;
+  color: #8ba4c7;
+  font-size: 10px
+}
+
+.generate-plan {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #24bca4, #338cff);
+  color: #fff;
+  padding: 10px;
+  font-weight: 800
+}
+
+.generate-plan:disabled {
+  opacity: .35
+}
+
+.plan-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px
+}
+
+.plan-kpis div {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #233852;
+  border-radius: 9px;
+  background: #0d1929;
+  overflow: hidden
+}
+
+.plan-kpis span,
+.plan-kpis b {
+  display: block;
+  overflow-wrap: anywhere
+}
+
+.plan-kpis span {
+  color: #8098b7;
+  font-size: 10px
+}
+
+.plan-kpis b {
+  margin-top: 4px;
+  color: #eff7ff;
+  font-size: 18px
+}
+
+.plan-note {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #0d1929;
+  color: #8fa8c8;
+  font-size: 11px;
+  overflow-wrap: anywhere
+}
+
+.weekly-plan-card {
+  margin-top: 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden
+}
+
+.weekly-plan {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+  max-width: 100%
+}
+
+.empty-plan {
+  display: block;
+  padding: 30px;
+  text-align: center;
+  color: #7189a8;
+  border: 1px dashed #2a405d;
+  border-radius: 9px
+}
+
+.plan-day {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 132px;
+  padding: 10px;
+  border: 1px solid #213650;
+  border-top: 3px solid #3b82f6;
+  border-radius: 10px;
+  background: #0d1929;
+  overflow: hidden
+}
+
+.plan-day header {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  color: #7f98b8;
+  font-size: 10px
+}
+
+.plan-day strong,
+.plan-day em,
+.plan-day small {
+  display: block;
+  overflow-wrap: anywhere
+}
+
+.plan-day strong {
+  margin-top: 13px;
+  color: #edf6ff;
+  font-size: 12px
+}
+
+.plan-day em {
+  margin-top: 6px;
+  color: #61d5ff;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 800
+}
+
+.plan-day small {
+  margin-top: 7px;
+  color: #849cba;
+  font-size: 9px
+}
+
+.plan-day.quality {
+  border-top-color: #ff6b7a
+}
+
+.plan-day.long {
+  border-top-color: #b58cff
+}
+
+.plan-day.unavailable {
+  border-top-color: #344861;
+  opacity: .62
+}
+
+.plan-day.unavailable em {
+  display: none
+}
+
+@media(max-width:1060px) {
+  .performance-layout {
+    grid-template-columns: 1fr
+  }
+
+  .weekly-plan {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))
+  }
+}
+
+@media(max-width:760px) {
+  .plan-form-grid {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .available-days {
+    grid-template-columns: repeat(4, 1fr)
+  }
+}
+
+/* Improve Performance corrections: visible Thai hints and responsive non-clipped cards. */
+main:has(#data.active) {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  align-content: start !important;
+  scrollbar-gutter: stable
+}
+
+#data.performance-page.active {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+  padding-bottom: 28px !important
+}
+
+.performance-page .plan-hint {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 17px !important;
+  height: 17px !important;
+  min-width: 17px !important;
+  padding: 0 !important;
+  margin: 0 0 0 4px !important;
+  border: 1px solid #42a5ff !important;
+  border-radius: 50% !important;
+  background: #102a46 !important;
+  color: #8ed0ff !important;
+  font: 700 11px/1 Arial, sans-serif !important;
+  vertical-align: middle !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: help !important
+}
+
+.performance-page .weekly-plan-card {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  margin-bottom: 0 !important
+}
+
+.performance-page .weekly-plan {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)) !important;
+  grid-auto-rows: minmax(150px, auto) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important
+}
+
+.performance-page .plan-day {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 150px !important;
+  overflow: hidden !important
+}
+
+.performance-page .plan-day header,
+.performance-page .plan-day strong,
+.performance-page .plan-day em,
+.performance-page .plan-day small {
+  position: relative !important;
+  z-index: 1 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important
+}
+
+@media(max-width:1200px) {
+  .performance-page .performance-layout {
+    grid-template-columns: 1fr !important
+  }
+
+  .performance-page .weekly-plan {
+    grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr)) !important
+  }
+}
+
+@media(max-width:760px) {
+  main:has(#data.active) {
+    padding-left: 8px !important;
+    padding-right: 8px !important
+  }
+
+  .performance-page .plan-form-grid {
+    grid-template-columns: 1fr !important
+  }
+
+  .performance-page .available-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important
+  }
+
+  .performance-page .weekly-plan {
+    grid-template-columns: 1fr !important
+  }
+}
+
+/* Improve Performance compact two-row setup and one-screen summary. */
+main:has(#data.active) {
+  overflow: hidden !important
+}
+
+#data.performance-page.active {
+  height: 100% !important;
+  min-height: 0 !important;
+  padding-bottom: 0 !important;
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  gap: 8px !important
+}
+
+.performance-page .performance-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 32%) !important;
+  gap: 8px !important
+}
+
+.performance-page .card {
+  padding: 10px 12px !important
+}
+
+.performance-page .card h3 {
+  font-size: 16px !important
+}
+
+.performance-page .plan-form-grid {
+  display: grid !important;
+  grid-template-columns: max-content max-content max-content max-content !important;
+  grid-template-rows: repeat(2, auto) !important;
+  justify-content: space-between !important;
+  align-items: end !important;
+  column-gap: 10px !important;
+  row-gap: 6px !important;
+  margin-top: 5px !important
+}
+
+.performance-page .plan-form-grid label {
+  width: max-content !important;
+  max-width: 100% !important
+}
+
+.performance-page .plan-form-grid label:nth-child(1) {
+  width: 170px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(2) {
+  width: 260px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(3) {
+  width: 135px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(4) {
+  width: 130px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(5) {
+  width: 145px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(6) {
+  width: 175px !important
+}
+
+.performance-page .plan-form-grid label:nth-child(7) {
+  width: 145px !important
+}
+
+.performance-page .plan-form-grid input,
+.performance-page .plan-form-grid select {
+  min-height: 30px !important;
+  height: 30px !important;
+  margin-top: 3px !important;
+  padding: 4px 8px !important
+}
+
+.performance-page .goal-meaning {
+  margin-top: 6px !important;
+  padding: 5px 8px !important;
+  min-height: 27px !important
+}
+
+.performance-page .available-days-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 6px !important;
+  min-width: 0 !important
+}
+
+.performance-page .available-days {
+  flex: 1 1 auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(46px, 1fr)) !important;
+  gap: 5px !important;
+  min-width: 0 !important
+}
+
+.performance-page .available-days button {
+  height: 31px !important;
+  padding: 4px 2px !important;
+  font-size: 13px !important
+}
+
+.performance-page .available-count {
+  flex: 0 0 auto;
+  color: #8ba4c7;
+  font-size: 10px;
+  white-space: nowrap
+}
+
+.performance-page .plan-validation {
+  display: inline-block !important;
+  min-height: 14px !important;
+  margin: 4px 8px 0 0 !important
+}
+
+.performance-page .generate-plan {
+  height: 32px !important;
+  padding: 5px !important;
+  font-size: 14px !important
+}
+
+.performance-page .plan-kpis {
+  gap: 5px !important;
+  margin-top: 5px !important
+}
+
+.performance-page .plan-kpis div {
+  padding: 6px 8px !important
+}
+
+.performance-page .plan-kpis b {
+  font-size: 15px !important
+}
+
+.performance-page .plan-note {
+  margin-top: 5px !important;
+  padding: 6px 8px !important;
+  font-size: 10px !important
+}
+
+.performance-page .weekly-plan-card {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  margin-top: 0 !important
+}
+
+.performance-page .weekly-plan-card .card-head {
+  flex: 0 0 auto !important
+}
+
+.performance-page .weekly-plan {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  grid-template-rows: 1fr !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+  overflow: hidden !important
+}
+
+.performance-page .plan-day {
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: 7px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important
+}
+
+.performance-page .plan-day header {
+  font-size: 9px !important
+}
+
+.performance-page .plan-day strong {
+  margin-top: 5px !important;
+  font-size: 11px !important
+}
+
+.performance-page .plan-day em {
+  margin-top: 2px !important;
+  font-size: 14px !important
+}
+
+.performance-page .workout-detail {
+  display: grid;
+  gap: 2px;
+  margin-top: 5px;
+  color: #8fa8c8;
+  font-size: 8.5px;
+  line-height: 1.2;
+  overflow: hidden
+}
+
+.performance-page .workout-detail span {
+  display: block;
+  overflow-wrap: anywhere
+}
+
+@media(max-width:1450px) {
+  .performance-page .plan-form-grid {
+    grid-template-columns: max-content max-content max-content !important
+  }
+
+  .performance-page .plan-form-grid label:nth-child(n) {
+    width: auto !important;
+    min-width: 130px !important
+  }
+
+  .performance-page .weekly-plan {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important
+  }
+}
+
+@media(max-width:980px) {
+  main:has(#data.active) {
+    overflow-y: auto !important
+  }
+
+  .performance-page .performance-layout {
+    grid-template-columns: 1fr !important
+  }
+
+  .performance-page .plan-form-grid {
+    grid-template-columns: repeat(2, max-content) !important;
+    justify-content: start !important
+  }
+
+  .performance-page .weekly-plan {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important
+  }
+
+  .performance-page .plan-day {
+    min-height: 125px !important
+  }
+
+  .performance-page .weekly-plan-card {
+    height: auto !important;
+    overflow: visible !important
+  }
+}
+
+/* Improve Performance requested layout correction. */
+.performance-page .goal-meaning {
+  display: none !important
+}
+
+.performance-page .available-title {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin: 6px 0 4px !important;
+  font-size: 11px !important
+}
+
+.performance-page .available-title span {
+  color: #8ba4c7 !important;
+  font-size: 10px !important
+}
+
+.performance-page .available-days-row {
+  margin-top: 0 !important
+}
+
+.performance-page .plan-form-grid {
+  grid-template-columns: repeat(4, max-content) !important;
+  grid-template-rows: repeat(2, auto) !important;
+  grid-auto-flow: row !important;
+  justify-content: space-between !important
+}
+
+.performance-page .plan-form-grid label:nth-child(n) {
+  min-width: 0 !important
+}
+
+@media(max-width:1450px) {
+  .performance-page .plan-form-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, auto) !important
+  }
+
+  .performance-page .plan-form-grid label:nth-child(n) {
+    width: 100% !important;
+    min-width: 0 !important
+  }
+}
+
+@media(max-width:980px) {
+  .performance-page .plan-form-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, auto) !important
+  }
+}
+
+/* Requested Improve Performance readability corrections only. */
+.performance-page .plan-hint {
+  cursor: pointer !important
+}
+
+.performance-page .plan-validation:empty {
+  display: none !important
+}
+
+.performance-page .weekly-plan {
+  grid-auto-rows: minmax(0, 1fr) !important
+}
+
+.performance-page .plan-day strong {
+  font-size: 13px !important;
+  line-height: 1.25 !important
+}
+
+.performance-page .plan-day em {
+  font-size: 16px !important;
+  line-height: 1.2 !important
+}
+
+.performance-page .workout-detail {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  margin-top: 7px !important;
+  color: #b8cbe0 !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  overflow: visible !important
+}
+
+.performance-page .workout-detail span {
+  display: block !important;
+  overflow: visible !important;
+  white-space: normal !important
+}
+
+.performance-page .workout-detail span:nth-child(3) {
+  color: #6ee7d2 !important;
+  font-weight: 800 !important;
+  font-size: 12px !important
+}
+
+.performance-page .workout-detail span:nth-child(4) {
+  color: #7fc8ff !important;
+  font-weight: 700 !important
+}
+
+/* Requested Improve Performance spacing and fixed seven-column plan. */
+.performance-page .plan-validation {
+  display: none !important
+}
+
+.performance-page .plan-note:empty {
+  display: none !important
+}
+
+.performance-page .weekly-plan.empty-plan:empty {
+  display: none !important
+}
+
+.performance-page .available-days-row {
+  margin-bottom: 12px !important
+}
+
+.performance-page .generate-plan {
+  margin-top: 8px !important
+}
+
+.performance-page .weekly-plan {
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  grid-auto-flow: column !important;
+  overflow: hidden !important
+}
+
+@media(max-width:1450px) {
+  .performance-page .weekly-plan {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1fr) !important
+  }
+}
+
+@media(max-width:980px) {
+  .performance-page .weekly-plan {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1fr) !important
+  }
+
+  .performance-page .plan-day {
+    min-width: 0 !important
+  }
+}
+
+/* Improve Performance only: reuse HR Zone Distribution colors as font colors. */
+.performance-page .workout-detail .plan-zone {
+  display: inline !important;
+  width: auto !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-weight: 800 !important
+}
+
+.performance-page .workout-detail .plan-zone.zone-2 {
+  color: #45a7ff !important
+}
+
+.performance-page .workout-detail .plan-zone.zone-3-4 {
+  color: #39d98a !important
+}
+
+.performance-page .workout-detail .plan-zone.zone-4-5 {
+  color: #ff8a3d !important
+}
+
+/* Requested Improve Performance card header readability only. */
+.performance-page .plan-day header {
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  font-weight: 700 !important
+}
+
+.performance-page .plan-day header b {
+  font-size: 13px !important
+}
+
+.performance-page .plan-day header span {
+  font-size: 12px !important
+}
+
+/* Weekly Running Plan global weekday colors */
+.performance-page .weekly-plan .plan-day.day-0 {
+  border-top-color: var(--yellow) !important
+}
+
+.performance-page .weekly-plan .plan-day.day-1 {
+  border-top-color: #ff7ab8 !important
+}
+
+.performance-page .weekly-plan .plan-day.day-2 {
+  border-top-color: var(--green) !important
+}
+
+.performance-page .weekly-plan .plan-day.day-3 {
+  border-top-color: #ff8a3d !important
+}
+
+.performance-page .weekly-plan .plan-day.day-4 {
+  border-top-color: var(--blue) !important
+}
+
+.performance-page .weekly-plan .plan-day.day-5 {
+  border-top-color: var(--purple) !important
+}
+
+.performance-page .weekly-plan .plan-day.day-6 {
+  border-top-color: var(--red) !important
+}
+
+/* Weekly plan selector main-theme */
+.performance-page .plan-week-view {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0
+}
+
+.performance-page #planWeekView {
+  min-width: 108px;
+  height: 30px;
+  border: 1px solid #263a57;
+  border-radius: 8px;
+  background: #0c1727;
+  color: #e9f2ff;
+  padding: 4px 28px 4px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color-scheme: dark;
+  cursor: pointer;
+  outline: none
+}
+
+.performance-page #planWeekView:hover,
+.performance-page #planWeekView:focus {
+  border-color: #45a7ff;
+  box-shadow: 0 0 0 2px #45a7ff24
+}
+
+.performance-page #planRange {
+  color: #8ba4c7;
+  font-size: 11px;
+  white-space: nowrap
+}
+
+/* ==================================================
+
+/* FINAL RESPONSIVE SHELL */
+:root {
+  color-scheme: dark;
+  --scroll-track:#151b20;
+  --scroll-track-border:#27323a;
+  --scroll-thumb-start:#13bcd7;
+  --scroll-thumb-end:#3f91d8;
+}
+
+.tabs { min-width:0; }
+.tab { flex:0 0 auto; min-width:max-content; }
+
+/* Windowed desktop/tablet: scroll content vertically and tabs horizontally when required. */
+@media (min-width:761px) and (max-width:1439px) {
+  html, body { width:100%; height:100%; overflow:hidden; }
+  body { display:flex; flex-direction:column; }
+  header { flex:0 0 auto; height:auto; }
+  .head {
+    width:100%; height:auto; min-height:58px;
+    display:grid; grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:auto auto; align-items:center;
+    gap:12px; padding:12px 24px 14px;
+  }
+  .brand { grid-column:1; grid-row:1; min-width:0; }
+  .title { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .actions { grid-column:2; grid-row:1; justify-self:end; }
+  .tabs {
+    grid-column:1/-1; grid-row:2; justify-self:center;
+    width:fit-content; max-width:100%; margin:2px auto 0;
+    padding:5px 8px 8px; justify-content:flex-start;
+    overflow-x:auto; overflow-y:hidden; white-space:nowrap;
+    scroll-behavior:smooth; overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+    scrollbar-color:var(--scroll-thumb-start) var(--scroll-track);
+  }
+  #workspace { flex:1 1 auto; height:auto; min-height:0; overflow:hidden; }
+  #filterPanel {
+    height:100%; min-height:0; overflow-x:hidden; overflow-y:auto;
+    scrollbar-gutter:stable;
+  }
+  main {
+    height:100%; min-height:0; overflow-x:hidden; overflow-y:auto;
+    overscroll-behavior-y:contain; scrollbar-gutter:stable;
+  }
+  .page.active { height:auto; min-height:100%; }
+  #overview.page.active { grid-template-rows:auto auto; align-content:start; }
+  #overview .fit-overview-row>.card:first-child { height:auto; min-height:120px; }
+  #overview .fit-overview-row>.card:nth-child(2),
+  #overview .overview-chart-row .card { height:380px; min-height:380px; }
+  .performance-page.page.active { height:auto; min-height:100%; overflow:visible; }
+}
+
+/* Mobile: natural page scrolling. */
+@media (max-width:760px) {
+  html { height:auto; min-height:100%; overflow-x:hidden; overflow-y:auto; }
+  body { height:auto; min-height:100vh; overflow-x:hidden; overflow-y:visible; }
+  header { position:sticky; top:0; z-index:1000; height:auto; }
+  .head {
+    height:auto; min-height:58px;
+    grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto;
+    gap:12px; padding:12px 16px 14px;
+  }
+  .brand { grid-column:1; grid-row:1; }
+  .actions { grid-column:2; grid-row:1; }
+  .tabs {
+    grid-column:1/-1; grid-row:2; width:100%; max-width:100%;
+    margin:2px auto 0; padding:5px 8px 8px; justify-content:flex-start;
+    overflow-x:auto; overflow-y:hidden; white-space:nowrap;
+    scrollbar-width:thin;
+    scrollbar-color:var(--scroll-thumb-start) var(--scroll-track);
+  }
+  .tab { min-height:44px; padding:9px 14px; }
+  #workspace { display:block; width:100%; height:auto; min-height:calc(100vh - 100px); overflow:visible; }
+  #filterPanel, main, .page.active, .performance-page.page.active {
+    width:100%; height:auto; min-height:0; overflow:visible;
+  }
+  main { padding-bottom:24px; }
+  #overview.page.active, #training.page.active, #running.page.active, #race.page.active { grid-template-rows:auto; }
+  #overview .fit-overview-row>.card:nth-child(2),
+  #overview .overview-chart-row .card { height:340px; min-height:340px; }
+}
+
+/* True full-screen desktop: original fixed layout, no added Y scrolling. */
+@media (min-width:1440px) {
+  html, body { display:block; width:100%; height:100%; overflow:hidden; }
+  header { height:58px; }
+  #workspace { height:calc(100vh - 58px); min-height:0; overflow:hidden; }
+  #filterPanel, main { height:100%; min-height:0; overflow:hidden; }
+  .page.active { height:100%; }
+  .tabs { justify-content:center; overflow:hidden; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+}
+
+html, body, main, #filterPanel, .tabs, .tablewrap, .weekly-plan {
+  scrollbar-width:thin;
+  scrollbar-color:var(--scroll-thumb-start) var(--scroll-track);
+}
+::-webkit-scrollbar { width:9px; height:9px; }
+::-webkit-scrollbar-track { background:var(--scroll-track); border:1px solid var(--scroll-track-border); }
+::-webkit-scrollbar-thumb {
+  min-width:52px; min-height:52px;
+  background:linear-gradient(180deg,var(--scroll-thumb-start),var(--scroll-thumb-end));
+  border:1px solid #21495b; border-radius:999px;
+}
+::-webkit-scrollbar-corner { background:var(--scroll-track); }
+
+/* =========================================================
+   WINDOW MODE OVERRIDE
+   app.js supplies is-maximized-mode from actual window geometry.
+   ========================================================= */
+html.is-maximized-mode,
+html.is-maximized-mode body {
+  width:100% !important;
+  height:100% !important;
+  overflow:hidden !important;
+}
+
+html.is-maximized-mode body {
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+html.is-maximized-mode header {
+  position:relative !important;
+  top:auto !important;
+  flex:0 0 auto !important;
+}
+
+html.is-maximized-mode #workspace {
+  flex:1 1 auto !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+
+html.is-maximized-mode #filterPanel,
+html.is-maximized-mode main,
+html.is-maximized-mode .page.active,
+html.is-maximized-mode .performance-page.page.active {
+  height:100% !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  scrollbar-gutter:auto !important;
+}
+
+html.is-maximized-mode .tabs {
+  overflow:hidden !important;
+  scrollbar-width:none !important;
+}
+
+html.is-maximized-mode .tabs::-webkit-scrollbar {
+  display:none !important;
+}
+
+@media (min-width:1200px) {
+  html.is-maximized-mode header { height:58px !important; }
+  html.is-maximized-mode .head {
+    width:100% !important;
+    height:58px !important;
+    min-height:58px !important;
+    display:grid !important;
+    grid-template-columns:290px minmax(0,1fr) 150px !important;
+    grid-template-rows:1fr !important;
+    align-items:center !important;
+    gap:12px !important;
+    padding:0 14px !important;
+  }
+  html.is-maximized-mode .brand { grid-column:1 !important; grid-row:1 !important; }
+  html.is-maximized-mode .tabs {
+    grid-column:2 !important; grid-row:1 !important;
+    width:auto !important; max-width:100% !important;
+    margin:0 !important; padding:3px !important;
+    justify-self:stretch !important; justify-content:center !important;
+  }
+  html.is-maximized-mode .actions {
+    grid-column:3 !important; grid-row:1 !important; justify-self:stretch !important;
+  }
+}
+
+@media (max-width:1199px) {
+  html.is-maximized-mode .head {
+    width:100% !important;
+    height:auto !important;
+    min-height:58px !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-rows:auto auto !important;
+    gap:8px !important;
+    padding:8px 12px 10px !important;
+  }
+  html.is-maximized-mode .brand { grid-column:1 !important; grid-row:1 !important; }
+  html.is-maximized-mode .actions { grid-column:2 !important; grid-row:1 !important; }
+  html.is-maximized-mode .tabs {
+    grid-column:1/-1 !important; grid-row:2 !important;
+    width:100% !important; max-width:100% !important;
+    margin:0 !important; padding:3px !important;
+    display:flex !important; flex-wrap:wrap !important;
+    justify-content:center !important;
+  }
+  html.is-maximized-mode .tab {
+    min-height:34px !important; padding:6px 9px !important; font-size:10px !important;
+  }
+}
+
+/* =========================================================
+   MAXIMIZED OVERVIEW FIT
+   Fit both overview rows inside the available viewport.
+   No scrolling and no bottom clipping in maximized mode.
+   ========================================================= */
+html.is-maximized-mode main {
+  padding: 10px !important;
+}
+
+html.is-maximized-mode #overview.page.active {
+  height: 100% !important;
+  min-height: 0 !important;
+  grid-template-rows: minmax(0, 42%) minmax(0, 58%) !important;
+  align-content: stretch !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #overview .fit-overview-row,
+html.is-maximized-mode #overview .overview-chart-row,
+html.is-maximized-mode #overview #kpis,
+html.is-maximized-mode #overview .card {
+  min-height: 0 !important;
+}
+
+html.is-maximized-mode #overview .fit-overview-row > .card:first-child,
+html.is-maximized-mode #overview .fit-overview-row > .card:nth-child(2),
+html.is-maximized-mode #overview .overview-chart-row,
+html.is-maximized-mode #overview .overview-chart-row .card {
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #overview #kpis {
+  height: 100% !important;
+  grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+  align-self: stretch !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #overview #kpis .kpi {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #activityContributions {
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #overview .overview-chart-row .chart,
+html.is-maximized-mode #overview .fit-overview-row > .card:nth-child(2) .chart {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode #overview canvas,
+html.is-maximized-mode #overview svg {
+  max-height: 100% !important;
+}
+
+/* =========================================================
+   WEEKLY PLAN FILTER: WINDOWED VS MAXIMIZED
+   Windowed view flows naturally. Only maximized mode uses
+   the fixed 4-column, 2-row arrangement.
+   ========================================================= */
+
+/* Restore the compact fixed arrangement only in maximized mode. */
+html.is-maximized-mode .performance-page .plan-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(2, auto) !important;
+  grid-auto-flow: row !important;
+  justify-content: space-between !important;
+  align-items: end !important;
+  column-gap: 10px !important;
+  row-gap: 6px !important;
+}
+
+html.is-maximized-mode .performance-page .plan-form-grid label:nth-child(n) {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Windowed view: no fixed two-row layout. Controls wrap by available width. */
+html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto !important;
+  grid-auto-flow: row !important;
+  justify-content: stretch !important;
+  align-items: end !important;
+  column-gap: 12px !important;
+  row-gap: 10px !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .plan-form-grid label:nth-child(n) {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .plan-form-grid input,
+html:not(.is-maximized-mode) .performance-page .plan-form-grid select {
+  width: 100% !important;
+}
+
+/* Narrow window: two columns, then one column on phone-sized widths. */
+@media (max-width: 700px) {
+  html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 460px) {
+  html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   SINGLE Y SCROLL BELOW THE X-SCROLLING TABS
+   Windowed mode: header + tabs stay above. #workspace owns
+   the only vertical scrollbar. Maximized mode has no scroll.
+   ========================================================= */
+
+/* Lock the browser viewport in windowed mode. */
+html:not(.is-maximized-mode),
+html:not(.is-maximized-mode) body {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html:not(.is-maximized-mode) body {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Header includes logo/actions and the X-scrolling tab bar. */
+html:not(.is-maximized-mode) header {
+  position: relative !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+html:not(.is-maximized-mode) .tabs {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  overscroll-behavior-x: contain !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--scroll-thumb-start) var(--scroll-track) !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* The only Y scrollbar begins immediately below the complete tab bar. */
+html:not(.is-maximized-mode) #workspace {
+  flex: 1 1 0 !important;
+  display: grid !important;
+  width: 100% !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  scrollbar-gutter: stable !important;
+}
+
+/* Remove nested vertical scrollbars from sidebar and content. */
+html:not(.is-maximized-mode) #filterPanel,
+html:not(.is-maximized-mode) main,
+html:not(.is-maximized-mode) .page.active,
+html:not(.is-maximized-mode) .performance-page,
+html:not(.is-maximized-mode) .performance-page.page.active,
+html:not(.is-maximized-mode) .weekly-plan-card {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  scrollbar-gutter: auto !important;
+}
+
+html:not(.is-maximized-mode) #filterPanel {
+  align-self: start !important;
+}
+
+html:not(.is-maximized-mode) main {
+  width: 100% !important;
+  padding-bottom: 24px !important;
+}
+
+/* Mobile/windowed: filter and main stack inside the same workspace scroll. */
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #workspace {
+    display: block !important;
+  }
+
+  html:not(.is-maximized-mode) #filterPanel,
+  html:not(.is-maximized-mode) main {
+    width: 100% !important;
+  }
+}
+
+/* Maximized/full-screen: retain the requested no-scroll behavior. */
+html.is-maximized-mode #workspace,
+html.is-maximized-mode #filterPanel,
+html.is-maximized-mode main,
+html.is-maximized-mode .page.active,
+html.is-maximized-mode .performance-page.page.active {
+  overflow-y: hidden !important;
+}
+
+/* =========================================================
+   WINDOWED CHART ASPECT RATIO
+   Prevent charts from stretching excessively on the Y axis.
+   Maximized/full-screen sizing remains unchanged.
+   ========================================================= */
+html:not(.is-maximized-mode) {
+  --chart-ratio-wide: 16 / 9;
+  --chart-ratio-compact: 4 / 3;
+  --chart-height-min: 220px;
+  --chart-height-max: 460px;
+}
+
+/* Chart cards grow from content instead of inheriting unlimited grid height. */
+html:not(.is-maximized-mode) .page.active,
+html:not(.is-maximized-mode) .grid,
+html:not(.is-maximized-mode) .twocol,
+html:not(.is-maximized-mode) .overview-chart-row,
+html:not(.is-maximized-mode) .training-main {
+  align-content: start !important;
+  grid-auto-rows: auto !important;
+}
+
+html:not(.is-maximized-mode) .card:has(> .chart),
+html:not(.is-maximized-mode) .card:has(> .svg-chart),
+html:not(.is-maximized-mode) .card:has(> .training-standard-chart) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Standard line/bar charts: width controls height through 16:9. */
+html:not(.is-maximized-mode) .chart {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: var(--chart-height-min) !important;
+  max-height: var(--chart-height-max) !important;
+  aspect-ratio: var(--chart-ratio-wide) !important;
+  overflow: hidden !important;
+}
+
+html:not(.is-maximized-mode) .chart canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+/* SVG and training charts follow the same ratio. */
+html:not(.is-maximized-mode) .svg-chart,
+html:not(.is-maximized-mode) .training-standard-chart,
+html:not(.is-maximized-mode) .svg-wrap {
+  width: 100% !important;
+  height: auto !important;
+  min-height: var(--chart-height-min) !important;
+  max-height: var(--chart-height-max) !important;
+  aspect-ratio: var(--chart-ratio-wide) !important;
+  overflow: hidden !important;
+}
+
+html:not(.is-maximized-mode) .svg-chart svg,
+html:not(.is-maximized-mode) .training-standard-chart canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Overview charts use the fixed ratio instead of the previous 340/380px rows. */
+html:not(.is-maximized-mode) #overview .overview-chart-row,
+html:not(.is-maximized-mode) #overview .overview-chart-row .card,
+html:not(.is-maximized-mode) #overview .fit-overview-row > .card:nth-child(2) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+html:not(.is-maximized-mode) #overview .overview-chart-row .chart,
+html:not(.is-maximized-mode) #overview .fit-overview-row > .card:nth-child(2) .chart {
+  aspect-ratio: var(--chart-ratio-wide) !important;
+}
+
+/* Narrow screens use 4:3 so labels remain readable without excessive height. */
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) {
+    --chart-height-min: 210px;
+    --chart-height-max: 360px;
+  }
+
+  html:not(.is-maximized-mode) .chart,
+  html:not(.is-maximized-mode) .svg-chart,
+  html:not(.is-maximized-mode) .training-standard-chart,
+  html:not(.is-maximized-mode) .svg-wrap {
+    aspect-ratio: var(--chart-ratio-compact) !important;
+  }
+}
+
+/* Very narrow phones: cap height to avoid tall portrait-like charts. */
+@media (max-width: 460px) {
+  html:not(.is-maximized-mode) {
+    --chart-height-min: 190px;
+    --chart-height-max: 300px;
+  }
+}
+
+
+
+/* =========================================================
+   IMPROVE PERFORMANCE: FINAL RESPONSIVE OVERRIDE
+   Keeps maximized desktop compact, while windowed/tablet/mobile
+   follow the same responsive flow as the other dashboard pages.
+   ========================================================= */
+
+/* Windowed mode: content participates in the shared #workspace Y scroll. */
+html:not(.is-maximized-mode) #data.performance-page.active {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+  padding-bottom: 24px !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .performance-layout {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .performance-layout > *,
+html:not(.is-maximized-mode) .performance-page .weekly-plan-card,
+html:not(.is-maximized-mode) .performance-page .weekly-plan,
+html:not(.is-maximized-mode) .performance-page .plan-day {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-flow: row !important;
+  gap: 10px 12px !important;
+  justify-content: stretch !important;
+  align-items: end !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .plan-form-grid label:nth-child(n) {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .available-days-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .available-days {
+  grid-template-columns: repeat(7, minmax(42px, 1fr)) !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .weekly-plan-card {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .weekly-plan {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-flow: row !important;
+  grid-auto-rows: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+html:not(.is-maximized-mode) .performance-page .plan-day {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 150px !important;
+  overflow: hidden !important;
+}
+
+/* Tablet and narrow desktop: stack setup/summary cards. */
+@media (max-width: 1180px) {
+  html:not(.is-maximized-mode) .performance-page .performance-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Mobile: one-column form and plan cards with touch-friendly controls. */
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #data.performance-page.active {
+    padding-bottom: 18px !important;
+  }
+
+  html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  html:not(.is-maximized-mode) .performance-page .available-days-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  html:not(.is-maximized-mode) .performance-page .available-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html:not(.is-maximized-mode) .performance-page .available-days button,
+  html:not(.is-maximized-mode) .performance-page .generate-plan,
+  html:not(.is-maximized-mode) .performance-page #planWeekView {
+    min-height: 44px !important;
+  }
+
+  html:not(.is-maximized-mode) .performance-page .weekly-plan {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Maximized desktop: retain the compact one-screen layout. */
+html.is-maximized-mode #data.performance-page.active {
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode .performance-page .performance-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 32%) !important;
+}
+
+html.is-maximized-mode .performance-page .weekly-plan {
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
+  grid-auto-flow: column !important;
+  overflow: hidden !important;
+}
+
+html.is-maximized-mode .performance-page .plan-day {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   TRAINING STATUS TIMELINE: FINAL RESPONSIVE OVERRIDE
+   Always keeps all 7 days and every generated week visible.
+   ========================================================= */
+#training .training-main > .card:has(#trainingStatusTimeline) {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+#trainingStatusTimeline.training-contributions {
+  --timeline-gap: clamp(1px, 0.18vw, 3px);
+  display: grid !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  grid-auto-flow: column !important;
+  grid-template-rows: repeat(7, minmax(3px, 1fr)) !important;
+  grid-template-columns: repeat(var(--weeks), minmax(0, 1fr)) !important;
+  grid-auto-columns: minmax(0, 1fr) !important;
+  gap: var(--timeline-gap) !important;
+  align-content: stretch !important;
+  overflow: hidden !important;
+  aspect-ratio: max(4 / 1, calc(var(--weeks) / 7)) !important;
+}
+
+#trainingStatusTimeline .status-box {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 3px !important;
+  border-radius: clamp(1px, 0.12vw, 3px) !important;
+  transform-origin: center !important;
+}
+
+/* Avoid hover enlargement being cut at the card edge. */
+#trainingStatusTimeline .status-box:hover {
+  transform: none !important;
+  filter: brightness(1.7) !important;
+}
+
+/* Windowed/tablet/mobile: timeline uses its natural responsive ratio. */
+html:not(.is-maximized-mode) #trainingStatusTimeline.training-contributions {
+  flex: none !important;
+  min-height: 56px !important;
+  max-height: 150px !important;
+}
+
+@media (max-width: 760px) {
+  #trainingStatusTimeline.training-contributions {
+    --timeline-gap: 1px;
+    min-height: 48px !important;
+    max-height: 100px !important;
+  }
+}
+
+/* Maximized mode: fit inside the assigned card without clipping. */
+html.is-maximized-mode #trainingStatusTimeline.training-contributions {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 42px !important;
+  max-height: 100% !important;
+  aspect-ratio: auto !important;
+}
+
+/* =========================================================
+   READINESS STATUS + ACTIVITIES: RESPONSIVE CHART OVERRIDE
+   ========================================================= */
+#recovery .card:has(#cReadiness),
+#running .card:has(canvas) {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+#recovery .card:has(#cReadiness) .chart,
+#running .card:has(canvas) .chart {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: clamp(220px, 32vh, 420px) !important;
+}
+
+#recovery #cReadiness,
+#running canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: inherit !important;
+}
+
+/* Windowed mode must grow vertically instead of shrinking charts to one screen. */
+html:not(.is-maximized-mode) #recovery.page.active,
+html:not(.is-maximized-mode) #running.page.active {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+}
+
+html:not(.is-maximized-mode) #recovery > .grid,
+html:not(.is-maximized-mode) #running > .grid,
+html:not(.is-maximized-mode) #running > .twocol {
+  height: auto !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: minmax(300px, auto) !important;
+}
+
+/* Activities: keep the KPI rail useful, then give every chart real drawing area. */
+@media (max-width: 1180px) {
+  html:not(.is-maximized-mode) #running.page.active {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(88px, auto) !important;
+    height: auto !important;
+  }
+
+  html:not(.is-maximized-mode) #running > .grid,
+  html:not(.is-maximized-mode) #running > .twocol,
+  html:not(.is-maximized-mode) #running > .card {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #recovery .card:has(#cReadiness) .chart,
+  #running .card:has(canvas) .chart {
+    min-height: 260px !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery > .grid,
+  html:not(.is-maximized-mode) #running > .grid,
+  html:not(.is-maximized-mode) #running > .twocol {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: minmax(320px, auto) !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  html:not(.is-maximized-mode) #running #runKpis {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Maximized mode: preserve no-scroll behavior, but prevent unreadably short plots. */
+html.is-maximized-mode #recovery .card:has(#cReadiness) .chart,
+html.is-maximized-mode #running .card:has(canvas) .chart {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   REV4 FINAL RESPONSIVE FIX
+   1) Training Status Timeline fills its card
+   2) Improve Performance always retains the main Y scrollbar
+   3) Activities KPI cards become horizontal in reduced windows
+   ========================================================= */
+
+/* 1. Training Status Timeline: remove the ratio that made wide timelines too short. */
+#training .training-main > .card:has(#trainingStatusTimeline) {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+#trainingStatusTimeline.training-contributions {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: clamp(120px, 19vh, 240px) !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  align-self: stretch !important;
+  align-content: stretch !important;
+  grid-template-rows: repeat(7, minmax(10px, 1fr)) !important;
+}
+
+#trainingStatusTimeline .status-box {
+  min-height: 10px !important;
+  border-radius: clamp(1px, .15vw, 3px) !important;
+}
+
+html.is-maximized-mode #trainingStatusTimeline.training-contributions {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+}
+
+@media (max-height: 760px) {
+  html:not(.is-maximized-mode) #trainingStatusTimeline.training-contributions {
+    min-height: 112px !important;
+  }
+}
+
+/* 2. Improve Performance: use main as the one and only vertical scroller.
+   This intentionally overrides desktop rules that hide overflow at >=1440px. */
+html:has(#data.performance-page.active),
+html:has(#data.performance-page.active) body {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+html:has(#data.performance-page.active) #workspace {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+html:has(#data.performance-page.active) main {
+  min-height: 0 !important;
+  height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  scrollbar-gutter: stable !important;
+  padding-bottom: 28px !important;
+}
+
+html:has(#data.performance-page.active) #data.performance-page.active {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+}
+
+html:has(#data.performance-page.active) .performance-page .performance-layout,
+html:has(#data.performance-page.active) .performance-page .weekly-plan-card,
+html:has(#data.performance-page.active) .performance-page .weekly-plan {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+html:has(#data.performance-page.active) .performance-page .weekly-plan {
+  grid-auto-rows: minmax(150px, auto) !important;
+}
+
+/* 3. Activities reduced-window layout: KPI cards run horizontally above charts. */
+@media (max-width: 1400px) {
+  html:not(.is-maximized-mode) #running.page.active {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-content: start !important;
+    height: auto !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    width: 100% !important;
+    height: auto !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: repeat(2, auto) !important;
+    gap: 10px !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .activity-card-group {
+    display: grid !important;
+    width: 100% !important;
+    grid-template-columns: 70px repeat(6, minmax(130px, 1fr)) !important;
+    grid-template-rows: minmax(92px, auto) !important;
+    gap: 7px !important;
+    align-items: stretch !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-gutter: stable !important;
+    padding-bottom: 4px !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .activity-card-group > h4 {
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 70px !important;
+    background: var(--bg) !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .kpi {
+    width: 100% !important;
+    min-width: 130px !important;
+    min-height: 92px !important;
+    padding: 10px 12px !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .label {
+    font-size: 11px !important;
+    white-space: normal !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .val,
+  html:not(.is-maximized-mode) #running #runKpis .pace-card .val {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: clamp(15px, 1.45vw, 21px) !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .foot {
+    font-size: 10px !important;
+  }
+
+  html:not(.is-maximized-mode) #running > .grid,
+  html:not(.is-maximized-mode) #running > .twocol,
+  html:not(.is-maximized-mode) #running > .card {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #running #runKpis .activity-card-group {
+    grid-template-columns: 58px repeat(6, 145px) !important;
+  }
+
+  html:not(.is-maximized-mode) #running #runKpis .activity-card-group > h4 {
+    min-width: 58px !important;
+    writing-mode: vertical-rl !important;
+    transform: rotate(180deg) !important;
+  }
+}
+
+/* =========================================================
+   REV2: REDUCED-WINDOW RESPONSIVE PAGE LAYOUTS
+   1) Sleep, Recovery, Health & Fitness use one chart-card column.
+   2) Training Insights KPI cards run horizontally above charts.
+   Maximized/full-screen layouts remain unchanged.
+   ========================================================= */
+
+/* Sleep, Recovery, Health & Fitness: one card per row in reduced windows. */
+@media (max-width: 1400px) {
+  html:not(.is-maximized-mode) #sleep.page.active,
+  html:not(.is-maximized-mode) #recovery.page.active,
+  html:not(.is-maximized-mode) #fitness.page.active {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #sleep > .grid,
+  html:not(.is-maximized-mode) #recovery > .grid,
+  html:not(.is-maximized-mode) #fitness > .grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
+    align-content: start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #sleep > .grid > .card,
+  html:not(.is-maximized-mode) #recovery > .grid > .card,
+  html:not(.is-maximized-mode) #fitness > .grid > .card {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+
+  html:not(.is-maximized-mode) #sleep > .grid > .card .chart,
+  html:not(.is-maximized-mode) #recovery > .grid > .card .chart,
+  html:not(.is-maximized-mode) #fitness > .grid > .card .chart {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 300px !important;
+    max-height: 520px !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  /* Preserve the Readiness Status donut and legend arrangement inside its card. */
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+    display: grid !important;
+    grid-template-columns: minmax(220px, .9fr) minmax(180px, 1.1fr) !important;
+    grid-template-rows: auto minmax(300px, auto) !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > h3 {
+    grid-column: 1 / -1 !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart-legend-note {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+
+  /* Training Insights: KPI rail becomes one horizontal row above all charts. */
+  html:not(.is-maximized-mode) #training.page.active {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-content: start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingKpis {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(160px, 1fr)) !important;
+    grid-template-rows: minmax(112px, auto) !important;
+    grid-auto-flow: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 4px !important;
+    scrollbar-gutter: stable !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingKpis .kpi {
+    width: 100% !important;
+    min-width: 160px !important;
+    min-height: 112px !important;
+    height: 100% !important;
+    padding: 10px 12px !important;
+  }
+
+  html:not(.is-maximized-mode) #training .training-main {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: minmax(320px, auto) !important;
+    align-content: start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #training .training-main > .card:nth-child(n) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 320px !important;
+  }
+}
+
+/* Narrow screens: keep all chart pages and Training charts in one column. */
+@media (max-width: 900px) {
+  html:not(.is-maximized-mode) #training .training-main {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingKpis {
+    grid-template-columns: repeat(5, 155px) !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingKpis .kpi {
+    min-width: 155px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #sleep > .grid > .card .chart,
+  html:not(.is-maximized-mode) #recovery > .grid > .card .chart,
+  html:not(.is-maximized-mode) #fitness > .grid > .card .chart {
+    min-height: 260px !important;
+    max-height: 380px !important;
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart-legend-note {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+
+/* =========================================================
+   RACE PREDICTOR: REDUCED-WINDOW RESPONSIVE LAYOUT
+   KPI cards horizontal above the chart.
+   Full-screen/maximized layout remains unchanged.
+   ========================================================= */
+@media (max-width: 1400px) {
+  html:not(.is-maximized-mode) #race.page.active {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-content: start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+
+  html:not(.is-maximized-mode) #race #raceKpis {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(165px, 1fr)) !important;
+    grid-template-rows: minmax(112px, auto) !important;
+    grid-auto-flow: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 4px !important;
+    scrollbar-gutter: stable !important;
+  }
+
+  html:not(.is-maximized-mode) #race #raceKpis .kpi {
+    width: 100% !important;
+    min-width: 165px !important;
+    min-height: 112px !important;
+    height: 100% !important;
+    padding: 12px 14px !important;
+  }
+
+  html:not(.is-maximized-mode) #race > .card {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  html:not(.is-maximized-mode) #race > .card .chart {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 300px !important;
+    max-height: 520px !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #race #raceKpis {
+    grid-template-columns: repeat(4, 155px) !important;
+  }
+
+  html:not(.is-maximized-mode) #race #raceKpis .kpi {
+    min-width: 155px !important;
+  }
+
+  html:not(.is-maximized-mode) #race > .card .chart {
+    min-height: 260px !important;
+    max-height: 380px !important;
+    aspect-ratio: 4 / 3 !important;
+  }
+}
+
+/* =========================================================
+   TRAINING STATUS TIMELINE: FILL AVAILABLE CARD AREA
+   Reduced-window layout only. Other pages remain unchanged.
+   ========================================================= */
+@media (max-width: 1400px) {
+  html:not(.is-maximized-mode) #training .training-main > .card:has(#trainingStatusTimeline) {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-height: clamp(400px, 48vh, 560px) !important;
+    height: auto !important;
+    overflow: hidden !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingStatusTimeline.training-contributions {
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 270px !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    align-self: stretch !important;
+    align-content: stretch !important;
+    justify-content: stretch !important;
+    grid-template-rows: repeat(7, minmax(18px, 1fr)) !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingStatusTimeline .status-box {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 18px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html:not(.is-maximized-mode) #training .training-main > .card:has(#trainingStatusTimeline) {
+    min-height: 360px !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingStatusTimeline.training-contributions {
+    min-height: 230px !important;
+    grid-template-rows: repeat(7, minmax(14px, 1fr)) !important;
+  }
+
+  html:not(.is-maximized-mode) #trainingStatusTimeline .status-box {
+    min-height: 14px !important;
+  }
+}
+
+/* =========================================================
+   READINESS STATUS: DONUT LEFT, TITLE + LEGEND RIGHT
+   Keeps the donut compact and aligns all descriptive content
+   as one right-side column.
+   ========================================================= */
+#recovery .card:has(#cLevel) {
+  display: grid !important;
+  grid-template-columns: minmax(190px, 34%) minmax(0, 1fr) !important;
+  grid-template-rows: auto 1fr !important;
+  column-gap: 20px !important;
+  row-gap: 8px !important;
+  align-items: center !important;
+}
+
+#recovery .card:has(#cLevel) > h3 {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  margin: 0 !important;
+}
+
+#recovery .card:has(#cLevel) > .chart {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+  align-self: center !important;
+  justify-self: start !important;
+  width: 100% !important;
+  max-width: 280px !important;
+  min-width: 0 !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  min-height: 0 !important;
+  max-height: 280px !important;
+}
+
+#recovery .card:has(#cLevel) > .chart-legend-note {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: start !important;
+  justify-self: stretch !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Override the earlier reduced-window recovery layout. */
+@media (max-width: 1400px) {
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+    display: grid !important;
+    grid-template-columns: minmax(180px, 32%) minmax(0, 1fr) !important;
+    grid-template-rows: auto 1fr !important;
+    column-gap: 18px !important;
+    align-items: center !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > h3 {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    justify-self: start !important;
+    min-height: 0 !important;
+    max-height: 260px !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart-legend-note {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+  }
+}
+
+/* On very narrow phones, preserve readability instead of squeezing both columns. */
+@media (max-width: 560px) {
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+    grid-template-columns: minmax(140px, 42%) minmax(0, 1fr) !important;
+    column-gap: 12px !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart {
+    max-height: 190px !important;
+  }
+}
+
+/* =========================================================
+   READINESS STATUS: TITLE TOP-LEFT, DONUT + LEGEND BELOW
+   ========================================================= */
+#recovery .card:has(#cLevel),
+html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+  display: grid !important;
+  grid-template-columns: minmax(190px, 34%) minmax(0, 1fr) !important;
+  grid-template-rows: auto minmax(0, 1fr) !important;
+  column-gap: 20px !important;
+  row-gap: 10px !important;
+  align-items: center !important;
+}
+
+#recovery .card:has(#cLevel) > h3,
+html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > h3 {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+  align-self: start !important;
+  width: 100% !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+#recovery .card:has(#cLevel) > .chart,
+html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  justify-self: start !important;
+  align-self: center !important;
+  width: 100% !important;
+  max-width: 280px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-height: 280px !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+#recovery .card:has(#cLevel) > .chart-legend-note,
+html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart-legend-note {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  justify-self: stretch !important;
+  align-self: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 560px) {
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) {
+    grid-template-columns: minmax(140px, 42%) minmax(0, 1fr) !important;
+    column-gap: 12px !important;
+  }
+
+  html:not(.is-maximized-mode) #recovery .card:has(#cLevel) > .chart {
+    max-height: 190px !important;
+  }
+}
