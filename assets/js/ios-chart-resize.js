@@ -1,25 +1,23 @@
+/* REPLACEMENT FILE: preserve all tab hints and resize visible charts only. */
 (() => {
   "use strict";
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  let timer = 0;
-  let hintTimer = 0;
 
-  function activeCanvases() {
-    return [...document.querySelectorAll(".page.active canvas")]
+  let resizeTimer = 0;
+
+  function getVisibleCharts() {
+    return Array.from(document.querySelectorAll(".page.active canvas"))
       .filter(canvas => canvas.offsetParent !== null);
   }
 
-  function resizeCharts(delay = 100) {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      activeCanvases().forEach(canvas => {
+  function resizeVisibleCharts(delay = 80) {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      getVisibleCharts().forEach(canvas => {
         const holder = canvas.closest(".chart, .svg-chart") || canvas.parentElement;
         if (!holder) return;
-        const width = Math.max(1, Math.round(holder.clientWidth));
-        const height = Math.max(1, Math.round(holder.clientHeight));
-        canvas.style.width = width + "px";
-        canvas.style.height = height + "px";
+
+        const width = Math.max(1, Math.round(holder.getBoundingClientRect().width));
+        const height = Math.max(1, Math.round(holder.getBoundingClientRect().height));
 
         if (window.Chart && typeof window.Chart.getChart === "function") {
           const chart = window.Chart.getChart(canvas);
@@ -32,70 +30,31 @@
     }, delay);
   }
 
-  function scheduleResize() {
-    resizeCharts(50);
-    setTimeout(() => resizeCharts(0), 250);
-    setTimeout(() => resizeCharts(0), 700);
+  function resizeSequence() {
+    resizeVisibleCharts(0);
+    window.setTimeout(() => resizeVisibleCharts(0), 180);
+    window.setTimeout(() => resizeVisibleCharts(0), 500);
   }
 
-  function installHints() {
-    if (!isIOS) return;
-    let popover = document.querySelector(".ios-hint-popover");
-    if (!popover) {
-      popover = document.createElement("div");
-      popover.className = "ios-hint-popover";
-      popover.setAttribute("role", "status");
-      document.body.appendChild(popover);
-    }
+  window.addEventListener("load", resizeSequence, { once: true });
+  window.addEventListener("pageshow", resizeSequence);
+  window.addEventListener("orientationchange", resizeSequence);
+  window.addEventListener("resize", () => resizeVisibleCharts(120));
 
-    document.querySelectorAll(".tab[title]").forEach(tab => {
-      tab.dataset.hint = tab.getAttribute("title") || "";
-      tab.removeAttribute("title");
-    });
-
-    document.querySelectorAll(".hint-dot[title], .plan-hint[title]").forEach(button => {
-      button.dataset.hint = button.getAttribute("title") || "";
-      button.removeAttribute("title");
-    });
-
-    document.addEventListener("click", event => {
-      const hint = event.target.closest(".hint-dot, .plan-hint");
-      if (!hint || !hint.dataset.hint) return;
-      event.preventDefault();
-      event.stopPropagation();
-      clearTimeout(hintTimer);
-      popover.textContent = hint.dataset.hint;
-      popover.classList.add("is-visible");
-      hintTimer = setTimeout(() => popover.classList.remove("is-visible"), 3500);
-    }, true);
-  }
-
-  window.addEventListener("load", () => {
-    installHints();
-    scheduleResize();
-  }, { once: true });
-
-  window.addEventListener("orientationchange", scheduleResize);
-  window.addEventListener("pageshow", scheduleResize);
-  window.addEventListener("resize", () => resizeCharts(120));
   if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", () => resizeCharts(120));
+    window.visualViewport.addEventListener("resize", () => resizeVisibleCharts(120));
   }
 
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) scheduleResize();
+    if (!document.hidden) resizeSequence();
   });
 
   document.addEventListener("click", event => {
     if (event.target.closest(".tab, [role='tab'], .nav-item")) {
-      setTimeout(scheduleResize, 80);
-    }
-  }, true);
-
-  const observer = new MutationObserver(mutations => {
-    if (mutations.some(m => [...m.addedNodes].some(n => n.nodeType === 1))) {
-      installHints();
+      window.setTimeout(resizeSequence, 60);
     }
   });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+
+  /* Intentionally do not remove or rewrite title attributes.
+     Existing tab hints remain exactly as defined in index.html/app.js. */
 })();
