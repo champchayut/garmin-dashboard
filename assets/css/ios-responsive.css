@@ -348,3 +348,80 @@ body {
         grid-template-columns: minmax(0, 1fr) !important
     }
 }
+/* iOS portrait: Improve Performance uses page scrolling and 1 column x 7 rows. */
+@media (orientation: portrait) and (max-width: 1024px) {
+    html,
+    html body {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100% !important;
+        max-height: none !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    html body #workspace {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    html body #workspace:has(#data.performance-page.active) #filterPanel {
+        display: none !important;
+    }
+
+    html body #workspace > main,
+    html body #workspace > main:has(#data.performance-page.active),
+    html body #workspace > main #data.performance-page.active {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        overscroll-behavior: auto !important;
+    }
+
+    html body #workspace > main #data.performance-page.active .weekly-plan-card {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    html body #workspace > main #data.performance-page.active #weeklyPlan.weekly-plan {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: repeat(7, auto) !important;
+        grid-auto-columns: minmax(0, 1fr) !important;
+        grid-auto-rows: auto !important;
+        grid-auto-flow: row !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        gap: 10px !important;
+        overflow: visible !important;
+    }
+
+    html body #workspace > main #data.performance-page.active #weeklyPlan.weekly-plan > .plan-day {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 150px !important;
+        max-height: none !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+}
