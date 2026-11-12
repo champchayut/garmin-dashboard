@@ -1,25 +1,350 @@
-:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
-*,*::before,*::after{box-sizing:border-box}html,body{max-width:100%;min-width:0}
-@media (max-width:767px){
- html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:scroll!important;-webkit-text-size-adjust:100%}
- body{position:static!important;width:100%!important;height:auto!important;min-height:100dvh!important;max-height:none!important;margin:0!important;padding:var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left)!important;overflow-x:hidden!important;overflow-y:visible!important;touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important}
- header{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;min-height:0!important;z-index:20}
- .head{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;grid-template-areas:'brand actions' 'tabs tabs'!important;gap:10px!important;width:100%!important;padding:10px 12px!important}
- .brand{grid-area:brand!important;min-width:0!important}.brand .title{font-size:clamp(15px,4.2vw,19px)!important;white-space:normal!important}.brand .sub{font-size:10px!important}.actions{grid-area:actions!important}.tabs{grid-area:tabs!important;display:flex!important;gap:7px!important;width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;padding:0 0 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important}.tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto!important;min-height:42px!important;padding:8px 12px!important}
- #uploadScreen{position:relative!important;inset:auto!important;width:100%!important;min-height:calc(100dvh - 115px)!important;overflow:visible!important}
- body:not(.no-data) #uploadScreen{display:none!important}body.no-data #workspace{display:none!important}
- #workspace{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:0 12px 28px!important}
- #mobileFilterToggle{position:sticky;top:0;z-index:30;display:flex;width:100%;min-height:46px;margin:8px 0;padding:10px 14px;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:#0b2634;color:#fff;font-weight:700;box-shadow:0 5px 18px rgba(0,0,0,.2)}
- #filterPanel{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0 0 12px!important;padding:12px!important;overflow:visible!important;transform:none!important}
- #filterPanel.mobile-collapsed{display:none!important}
- #adaptiveFilters{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;width:100%!important}#adaptiveFilters>*{min-width:0!important;max-width:100%!important}#adaptiveFilters input,#adaptiveFilters select,#adaptiveFilters button{width:100%!important;min-height:44px!important}
- #workspace>main{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;overflow:visible!important;transform:none!important}
- .page{display:none!important;position:relative!important;inset:auto!important}.page.active{display:block!important;visibility:visible!important;opacity:1!important;width:100%!important;height:auto!important;min-height:300px!important;max-height:none!important;padding:0!important;overflow:visible!important;transform:none!important}
- .page.active .grid,.page.active .twocol,.page.active .training-main,.page.active .overview-chart-row,.page.active .fit-overview-row,.page.active .performance-layout{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-auto-rows:auto!important;gap:12px!important;width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important}
- .page.active .card,.page.active .grid>.card,.page.active .training-main>.card{grid-column:1/-1!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:14px!important;overflow:hidden!important;border-radius:14px!important}
- .page.active h3{font-size:15px!important;line-height:1.35!important;margin:0 0 10px!important;overflow-wrap:anywhere}.chart,.svg-chart{position:relative!important;width:100%!important;height:clamp(250px,72vw,320px)!important;min-height:250px!important;max-height:320px!important;overflow:hidden!important;aspect-ratio:auto!important}.chart canvas,.svg-chart canvas{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important}
- .kpis,.training-kpis,.plan-kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.type-layout{display:grid!important;grid-template-columns:1fr!important;gap:12px!important}.activity-donut{justify-self:center!important}.contribution-grid,.training-contributions,.weekly-plan{max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
- .plan-form-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important}.available-days{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}.card-head{align-items:flex-start!important;gap:8px!important;flex-wrap:wrap!important}
- #trainingStatusTimeline{height:auto!important;min-height:340px!important;max-height:none!important;overflow-x:auto!important}.page.active>*+*{margin-top:12px!important}
+:root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px)
 }
-@media(max-width:390px){#workspace{padding-inline:9px!important}.page.active .card{padding:12px!important}.chart,.svg-chart{height:260px!important;min-height:240px!important}.kpis,.training-kpis,.plan-kpis{grid-template-columns:minmax(0,1fr)!important}}
+
+*,
+:before,
+:after {
+    box-sizing: border-box
+}
+
+html,
+body {
+    min-width: 0;
+    max-width: 100%
+}
+
+@media (max-width:767px) {
+    html {
+        -webkit-text-size-adjust: 100%;
+        height: auto !important;
+        min-height: 100% !important;
+        overflow-x: hidden !important;
+        overflow-y: scroll !important
+    }
+
+    body {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+        max-height: none !important;
+        padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left) !important;
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin: 0 !important;
+        position: static !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important
+    }
+
+    header {
+        z-index: 20;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important
+    }
+
+    .head {
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        grid-template-areas: "brand actions" "tabs tabs" !important;
+        gap: 10px !important;
+        width: 100% !important;
+        padding: 10px 12px !important;
+        display: grid !important
+    }
+
+    .brand {
+        grid-area: brand !important;
+        min-width: 0 !important
+    }
+
+    .brand .title {
+        white-space: normal !important;
+        font-size: max(15px, min(4.2vw, 19px)) !important
+    }
+
+    .brand .sub {
+        font-size: 10px !important
+    }
+
+    .actions {
+        grid-area: actions !important
+    }
+
+    .tabs {
+        scrollbar-width: none !important;
+        -webkit-overflow-scrolling: touch !important;
+        grid-area: tabs !important;
+        gap: 7px !important;
+        width: 100% !important;
+        padding: 0 0 4px !important;
+        display: flex !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none
+    }
+
+    .tab {
+        flex: none !important;
+        min-height: 42px !important;
+        padding: 8px 12px !important
+    }
+
+    #uploadScreen {
+        width: 100% !important;
+        min-height: calc(100dvh - 115px) !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        overflow: visible !important
+    }
+
+    body:not(.no-data) #uploadScreen,
+    body.no-data #workspace {
+        display: none !important
+    }
+
+    #workspace {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        padding: 0 12px 28px !important;
+        display: block !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        overflow: visible !important
+    }
+
+    #mobileFilterToggle {
+        display: none !important
+    }
+    #filterPanel {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 0 0 12px !important;
+        padding: 12px !important;
+        display: block !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        overflow: visible !important;
+        transform: none !important
+    }
+
+    #filterPanel.mobile-collapsed {
+        display: block !important
+    }
+
+    #adaptiveFilters {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 10px !important;
+        width: 100% !important;
+        display: grid !important
+    }
+
+    #adaptiveFilters>* {
+        min-width: 0 !important;
+        max-width: 100% !important
+    }
+
+    #adaptiveFilters input,
+    #adaptiveFilters select,
+    #adaptiveFilters button {
+        width: 100% !important;
+        min-height: 44px !important
+    }
+
+    #workspace>main {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        overflow: visible !important;
+        transform: none !important
+    }
+
+    .page {
+        display: none !important;
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important
+    }
+
+    .page.active {
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 300px !important;
+        max-height: none !important;
+        padding: 0 !important;
+        display: block !important;
+        overflow: visible !important;
+        transform: none !important
+    }
+
+    .page.active .grid,
+    .page.active .twocol,
+    .page.active .training-main,
+    .page.active .overview-chart-row,
+    .page.active .fit-overview-row,
+    .page.active .performance-layout {
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-auto-rows: auto !important;
+        gap: 12px !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        display: grid !important;
+        overflow: visible !important
+    }
+
+    .page.active .card,
+    .page.active .grid>.card,
+    .page.active .training-main>.card {
+        border-radius: 14px !important;
+        grid-area: auto/1/auto/-1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 14px !important;
+        overflow: hidden !important
+    }
+
+    .page.active h3 {
+        overflow-wrap: anywhere;
+        margin: 0 0 10px !important;
+        font-size: 15px !important;
+        line-height: 1.35 !important
+    }
+
+    .chart,
+    .svg-chart {
+        aspect-ratio: auto !important;
+        width: 100% !important;
+        height: max(250px, min(72vw, 320px)) !important;
+        min-height: 250px !important;
+        max-height: 320px !important;
+        position: relative !important;
+        overflow: hidden !important
+    }
+
+    .chart canvas,
+    .svg-chart canvas {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        display: block !important
+    }
+
+    .kpis,
+    .training-kpis,
+    .plan-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important
+    }
+
+    .type-layout {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        display: grid !important
+    }
+
+    .activity-donut {
+        justify-self: center !important
+    }
+
+    .contribution-grid,
+    .training-contributions,
+    .weekly-plan {
+        -webkit-overflow-scrolling: touch !important;
+        max-width: 100% !important;
+        overflow-x: auto !important
+    }
+
+    .plan-form-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 10px !important;
+        display: grid !important
+    }
+
+    .available-days {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 7px !important;
+        display: grid !important
+    }
+
+    .card-head {
+        flex-wrap: wrap !important;
+        align-items: flex-start !important;
+        gap: 8px !important
+    }
+
+    #trainingStatusTimeline {
+        height: auto !important;
+        min-height: 340px !important;
+        max-height: none !important;
+        overflow-x: auto !important
+    }
+
+    .page.active>*+* {
+        margin-top: 12px !important
+    }
+}
+
+@media (max-width:390px) {
+    #workspace {
+        padding-left: 9px !important;
+        padding-right: 9px !important
+    }
+
+    .page.active .card {
+        padding: 12px !important
+    }
+
+    .chart,
+    .svg-chart {
+        height: 260px !important;
+        min-height: 240px !important
+    }
+
+    .kpis,
+    .training-kpis,
+    .plan-kpis {
+        grid-template-columns: minmax(0, 1fr) !important
+    }
+}

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Garmin Monitoring Dashboard</title>
 
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <link rel="stylesheet" href="./assets/css/ios-responsive.css?v=6">
+    <link rel="stylesheet" href="./assets/css/styles.css?v=7">
+    <link rel="stylesheet" href="./assets/css/ios-responsive.css?v=7">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="64x64" href="./assets/icons/favicon-64.png">
@@ -284,21 +284,72 @@
                                         title="ช่วยคง Weekly Distance และความหนักใกล้ระดับปัจจุบันโดยไม่เร่งเพิ่มภาระ">
                                         รักษาความฟิตปัจจุบัน</option>
                                 </select></label>
-                            <label>Target value <button type="button" class="plan-hint"
-                                    title="ค่าผลลัพธ์ที่ต้องการ เช่น 50:00 สำหรับ 10K, 15 km สำหรับ Long Run หรือ 5:30 min/km สำหรับ Pace">?</button><input
-                                    id="planTargetValue" type="text" value="50:00"></label>
+                            <label>Target value <button type="button" class="plan-hint" id="planTargetHelp" title="">?</button><input
+                                    id="planTargetValue" type="text" value=""></label>
                             <label>Plan duration <button type="button" class="plan-hint"
-                                    title="จำนวนสัปดาห์ของแผน ระยะเวลานานขึ้นช่วยเพิ่มภาระการซ้อมแบบค่อยเป็นค่อยไป">?</button><select
+                                    title="เลือกจำนวนสัปดาห์ หรือกำหนด Race date เพื่อให้ระบบคำนวณอัตโนมัติ">?</button><select
                                     id="planWeeks">
+                                    <option value="" selected>Select weeks</option>
+                                    <option value="1">1 weeks</option>
+                                    <option value="2">2 weeks</option>
+                                    <option value="3">3 weeks</option>
                                     <option value="4">4 weeks</option>
-                                    <option value="8" selected>8 weeks</option>
+                                    <option value="5">5 weeks</option>
+                                    <option value="6">6 weeks</option>
+                                    <option value="7">7 weeks</option>
+                                    <option value="8">8 weeks</option>
+                                    <option value="9">9 weeks</option>
+                                    <option value="10">10 weeks</option>
+                                    <option value="11">11 weeks</option>
                                     <option value="12">12 weeks</option>
+                                    <option value="13">13 weeks</option>
+                                    <option value="14">14 weeks</option>
+                                    <option value="15">15 weeks</option>
                                     <option value="16">16 weeks</option>
+                                    <option value="17">17 weeks</option>
+                                    <option value="18">18 weeks</option>
+                                    <option value="19">19 weeks</option>
+                                    <option value="20">20 weeks</option>
+                                    <option value="21">21 weeks</option>
+                                    <option value="22">22 weeks</option>
+                                    <option value="23">23 weeks</option>
+                                    <option value="24">24 weeks</option>
+                                    <option value="25">25 weeks</option>
+                                    <option value="26">26 weeks</option>
+                                    <option value="27">27 weeks</option>
+                                    <option value="28">28 weeks</option>
+                                    <option value="29">29 weeks</option>
+                                    <option value="30">30 weeks</option>
+                                    <option value="31">31 weeks</option>
+                                    <option value="32">32 weeks</option>
+                                    <option value="33">33 weeks</option>
+                                    <option value="34">34 weeks</option>
+                                    <option value="35">35 weeks</option>
+                                    <option value="36">36 weeks</option>
+                                    <option value="37">37 weeks</option>
+                                    <option value="38">38 weeks</option>
+                                    <option value="39">39 weeks</option>
+                                    <option value="40">40 weeks</option>
+                                    <option value="41">41 weeks</option>
+                                    <option value="42">42 weeks</option>
+                                    <option value="43">43 weeks</option>
+                                    <option value="44">44 weeks</option>
+                                    <option value="45">45 weeks</option>
+                                    <option value="46">46 weeks</option>
+                                    <option value="47">47 weeks</option>
+                                    <option value="48">48 weeks</option>
+                                    <option value="49">49 weeks</option>
+                                    <option value="50">50 weeks</option>
+                                    <option value="51">51 weeks</option>
+                                    <option value="52">52 weeks</option>
                                 </select></label>
+                            <label>Race date <button type="button" class="plan-hint"
+                                    title="หากกำหนดวันแข่ง ระบบจะคำนวณ Plan duration จาก Week starts ถึง Race date และไม่สร้างแผนหลังวันแข่ง">?</button><input
+                                    id="planRaceDate" type="date"></label>
                             <label>Weekly target <button type="button" class="plan-hint"
                                     title="ระยะทางรวมต่อสัปดาห์ ระบบจะกระจายระยะเฉพาะวันที่เลือกว่าสามารถวิ่งได้">?</button><span
                                     class="input-unit"><input id="planTargetKm" type="number" min="5" max="200" step="1"
-                                        value="30"><span>km</span></span></label>
+                                        value="40"><span>km</span></span></label>
                             <label>Preferred long run <button type="button" class="plan-hint"
                                     title="วันที่ต้องการทำ Long Run โดยเลือกได้เฉพาะวันที่ระบุว่าสามารถวิ่งได้">?</button><select
                                     id="planLongDay" disabled>
@@ -307,7 +358,7 @@
                             <label>Maximum session <button type="button" class="plan-hint"
                                     title="เวลาสูงสุดที่สะดวกต่อการวิ่งหนึ่งครั้ง ใช้จำกัดระยะเวลาของ Long Run">?</button><span
                                     class="input-unit"><input id="planMaxMinutes" type="number" min="20" max="240"
-                                        step="5" value="90"><span>min</span></span></label>
+                                        step="5" value="120"><span>min</span></span></label>
                         </div>
                         <div class="available-title"><b>Available Running Days <button type="button" class="plan-hint"
                                     title="เลือกวันที่สามารถวิ่งได้จริงอย่างน้อย 2 วัน วันที่ไม่เลือกจะแสดงเป็น Unavailable ไม่ใช่ Rest Day">?</button></b><span
@@ -348,16 +399,20 @@
             </section>
         </main>
     </div>
-    <script src="./assets/js/app.js"></script>
-    <script src="./assets/js/weekly-plan.js"></script>
-    <script src="./assets/js/ios-mobile-ui.js?v=6"></script>
+    <script src="./assets/js/app.js?v=7"></script>
+    <script src="./assets/js/weekly-plan.js?v=7"></script>
+    <script src="./assets/js/ios-mobile-ui.js?v=7"></script>
 
     <script>
         if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("./service-worker.js")
-                    .catch(error => console.error("Service Worker registration failed:", error));
-            });
+            window.addEventListener("load", async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register("./service-worker.js", { scope: "./" });
+                    registration.update();
+                } catch (error) {
+                    console.error("Service Worker registration failed:", error);
+                }
+            }, { once: true });
         }
     </script>
 </body>

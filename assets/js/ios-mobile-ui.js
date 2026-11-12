@@ -1,1 +1,52 @@
-(()=>{"use strict";const mobile=()=>matchMedia("(max-width: 767px)").matches;let timer=0;function resize(){clearTimeout(timer);timer=setTimeout(()=>requestAnimationFrame(()=>{document.querySelectorAll(".page.active canvas").forEach(c=>{const box=c.closest(".chart,.svg-chart")||c.parentElement;const chart=window.Chart?.getChart?.(c);if(chart&&box){const r=box.getBoundingClientRect();if(r.width>1&&r.height>1){chart.resize(Math.round(r.width),Math.round(r.height));chart.update("none")}}})}),80)}function setup(){const ws=document.getElementById("workspace"),panel=document.getElementById("filterPanel");if(!ws||!panel)return;let btn=document.getElementById("mobileFilterToggle");if(!btn){btn=document.createElement("button");btn.id="mobileFilterToggle";btn.type="button";btn.setAttribute("aria-controls","filterPanel");ws.insertBefore(btn,panel)}const sync=()=>{if(mobile()){panel.classList.add("mobile-collapsed");btn.hidden=false;btn.setAttribute("aria-expanded","false");btn.textContent="Filters  ▾"}else{panel.classList.remove("mobile-collapsed");btn.hidden=true}};btn.onclick=()=>{const closed=panel.classList.toggle("mobile-collapsed");btn.setAttribute("aria-expanded",String(!closed));btn.textContent=closed?"Filters  ▾":"Hide filters  ▴";if(!closed)panel.scrollIntoView({block:"start"});resize()};sync();addEventListener("resize",()=>{sync();resize()},{passive:true});document.addEventListener("click",e=>{if(e.target.closest(".tab,[role=tab],.nav-item"))setTimeout(()=>{window.scrollTo({top:0,behavior:"instant"});resize()},50)});new MutationObserver(resize).observe(document.querySelector("main"),{subtree:true,attributes:true,attributeFilter:["class"]});resize();setTimeout(resize,300);setTimeout(resize,800)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",setup);else setup();addEventListener("pageshow",resize);addEventListener("orientationchange",resize)})();
+(() => {
+  "use strict";
+
+  let resizeTimer = 0;
+
+  function keepFiltersVisible() {
+    const toggle = document.getElementById("mobileFilterToggle");
+    if (toggle) toggle.remove();
+
+    const panel = document.getElementById("filterPanel");
+    if (!panel) return;
+    panel.classList.remove("mobile-collapsed");
+    panel.hidden = false;
+    panel.removeAttribute("aria-hidden");
+  }
+
+  function resizeActiveCharts() {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        document.querySelectorAll(".page.active canvas").forEach(canvas => {
+          const chart = window.Chart?.getChart?.(canvas);
+          if (!chart) return;
+          chart.resize();
+          chart.update("none");
+        });
+      });
+    }, 160);
+  }
+
+  function setup() {
+    keepFiltersVisible();
+
+    window.addEventListener("resize", resizeActiveCharts, { passive: true });
+    window.addEventListener("orientationchange", resizeActiveCharts, { passive: true });
+    window.addEventListener("pageshow", keepFiltersVisible, { passive: true });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".tab,[role=tab],.nav-item")) return;
+      window.setTimeout(() => {
+        keepFiltersVisible();
+        resizeActiveCharts();
+      }, 60);
+    }, { passive: true });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup, { once: true });
+  } else {
+    setup();
+  }
+})();
