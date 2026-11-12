@@ -6,7 +6,7 @@
  const selected=()=>[...box.querySelectorAll('.selected')].map(x=>+x.dataset.day).sort((a,b)=>a-b);let plans=[];
  function applyMobileWeeklyLayout(){
   const host=document.getElementById('weeklyPlan');if(!host)return;
-  const mobile=window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches;
+  const mobile=/iPad|iPhone|iPod/.test(navigator.userAgent)&&window.matchMedia('(orientation: portrait)').matches;
   if(mobile){
    host.style.setProperty('display','flex','important');
    host.style.setProperty('flex-direction','column','important');
