@@ -348,55 +348,181 @@ body {
         grid-template-columns: minmax(0, 1fr) !important
     }
 }
-/* iOS portrait: Improve Performance uses page scrolling and 1 column x 7 rows. */
-@media (orientation: portrait) and (max-width: 1024px) {
+/* =========================================================
+   iOS PORTRAIT FINAL OVERRIDE
+   - Whole-page vertical scrolling on every tab
+   - Filter participates in document flow and never overlays content
+   - Improve Performance hides the global filter
+   - Weekly Plan Setup is one field per row
+   - Weekly Running Plan is one column, seven rows
+   ========================================================= */
+@media (orientation: portrait) and (max-width: 1024px) and (hover: none) and (pointer: coarse) {
     html,
-    html body {
+    html.is-maximized-mode,
+    body,
+    body.has-data,
+    body:not(.no-data) {
         width: 100% !important;
         height: auto !important;
         min-height: 100% !important;
         max-height: none !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
+        position: static !important;
+        touch-action: pan-y !important;
         -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior-y: auto !important;
     }
 
-    html body #workspace {
-        display: block !important;
+    html body header,
+    html body .head {
+        position: relative !important;
+        inset: auto !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+
+    html body #workspace,
+    html.is-maximized-mode body #workspace {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
         width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
         overflow: visible !important;
+        position: static !important;
     }
 
-    html body #workspace:has(#data.performance-page.active) #filterPanel {
+    html body #filterPanel,
+    html.is-maximized-mode body #filterPanel {
+        order: 1 !important;
+        position: relative !important;
+        inset: auto !important;
+        z-index: auto !important;
+        display: block !important;
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        transform: none !important;
+    }
+
+    html body #workspace:has(.performance-page.page.active) #filterPanel,
+    html body #workspace:has(#data.page.active) #filterPanel,
+    html body #filterPanel.no-filter,
+    html body #filterPanel[hidden] {
         display: none !important;
     }
 
     html body #workspace > main,
-    html body #workspace > main:has(#data.performance-page.active),
-    html body #workspace > main #data.performance-page.active {
+    html.is-maximized-mode body #workspace > main {
+        order: 2 !important;
         display: block !important;
-        width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
-        overflow-x: hidden !important;
-        overflow-y: visible !important;
-        overscroll-behavior: auto !important;
-    }
-
-    html body #workspace > main #data.performance-page.active .weekly-plan-card {
-        display: block !important;
+        position: relative !important;
+        inset: auto !important;
+        flex: 0 0 auto !important;
         width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
         overflow: visible !important;
+        padding-bottom: max(28px, env(safe-area-inset-bottom)) !important;
     }
 
-    html body #workspace > main #data.performance-page.active #weeklyPlan.weekly-plan {
+    html body main > .page,
+    html body main > .page.active,
+    html.is-maximized-mode body main > .page.active,
+    html body main .performance-page,
+    html body main .performance-page.page.active,
+    html.is-maximized-mode body main .performance-page.page.active {
+        position: relative !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        transform: none !important;
+        zoom: 1 !important;
+    }
+
+    html body main > .page:not(.active) {
+        display: none !important;
+    }
+
+    html body main > .page.active {
+        display: block !important;
+    }
+
+    html body .page.active .card,
+    html body .page.active .tablewrap,
+    html body .page.active .performance-layout,
+    html body .page.active .weekly-plan-card,
+    html body .page.active .weekly-plan {
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+    }
+
+    html body .page.active .card,
+    html body .page.active .performance-layout,
+    html body .page.active .weekly-plan-card {
+        overflow: visible !important;
+    }
+
+    /* Weekly Plan Setup: one control per row, no inherited desktop grid areas. */
+    html body .performance-page .plan-form-grid,
+    html.is-maximized-mode body .performance-page .plan-form-grid {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-auto-flow: row !important;
+        grid-auto-rows: auto !important;
+        gap: 12px !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    html body .performance-page .plan-form-grid > label,
+    html.is-maximized-mode body .performance-page .plan-form-grid > label,
+    html.is-maximized-mode body .performance-page .plan-form-grid > label:first-child,
+    html.is-maximized-mode body .performance-page .plan-form-grid > label:nth-child(n) {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+    }
+
+    html body .performance-page .plan-form-grid input,
+    html body .performance-page .plan-form-grid select,
+    html body .performance-page .plan-form-grid .input-unit,
+    html body .performance-page .plan-form-grid button {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    html body .performance-page .available-days {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-auto-flow: row !important;
+        gap: 8px !important;
+        width: 100% !important;
+        overflow: visible !important;
+    }
+
+    /* Weekly Running Plan: one column, seven rows. */
+    html body .performance-page #weeklyPlan.weekly-plan,
+    html body .performance-page .weekly-plan {
         display: grid !important;
         grid-template-columns: minmax(0, 1fr) !important;
         grid-template-rows: repeat(7, auto) !important;
@@ -412,16 +538,25 @@ body {
         overflow: visible !important;
     }
 
-    html body #workspace > main #data.performance-page.active #weeklyPlan.weekly-plan > .plan-day {
+    html body .performance-page #weeklyPlan.weekly-plan > .plan-day,
+    html body .performance-page .weekly-plan > .plan-day {
         grid-column: 1 !important;
         grid-row: auto !important;
         width: 100% !important;
         min-width: 0 !important;
         max-width: 100% !important;
         height: auto !important;
-        min-height: 150px !important;
+        min-height: 0 !important;
         max-height: none !important;
         margin: 0 !important;
         overflow: visible !important;
+    }
+
+    #mobileFilterToggle,
+    .filter-toggle,
+    .filter-collapse,
+    [data-action="toggle-filter"],
+    [data-action="hide-filter"] {
+        display: none !important;
     }
 }
