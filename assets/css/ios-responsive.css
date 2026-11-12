@@ -316,91 +316,51 @@
       max-height: none !important;
     }
 
-    /* Requested iOS portrait layout refinements only. */
 
-    /* Larger dashboard title and tabs for easier reading. */
+    /* Header readability without overlapping Download/Delete buttons. */
     .head {
-      gap: 12px !important;
-      padding: 12px 12px 10px !important;
+      grid-template-columns: minmax(0, 1fr) max-content !important;
+      column-gap: 8px !important;
+      row-gap: 10px !important;
+      padding: 10px !important;
     }
-    .brand,
+
+    .brand {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+    }
+
     .brand h1,
     .brand .title,
     .dashboard-title {
-      font-size: clamp(22px, 5.5vw, 30px) !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      font-size: clamp(18px, 4.8vw, 22px) !important;
       line-height: 1.2 !important;
     }
-    .tabs { gap: 8px !important; }
+
+    .actions {
+      min-width: max-content !important;
+      max-width: max-content !important;
+      flex: 0 0 auto !important;
+      justify-self: end !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+
+    .tabs {
+      gap: 8px !important;
+    }
+
     .tab {
-      min-height: 44px !important;
-      padding: 10px 14px !important;
-      font-size: 16px !important;
-      line-height: 1.25 !important;
-    }
-
-    /* Overview and Training Insights: two-column cards; charts and timelines span full width. */
-    #overview.page.active .overview-chart-row,
-    #training.page.active .training-main {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-    #overview.page.active .overview-chart-row > .card:has(.chart),
-    #overview.page.active .overview-chart-row > .card:has(canvas),
-    #training.page.active .training-main > .card:has(.chart),
-    #training.page.active .training-main > .card:has(canvas),
-    #overview.page.active #activityContributionArea,
-    #training.page.active .training-main > .card:has(#trainingStatusTimeline) {
-      grid-column: 1 / -1 !important;
-      width: 100% !important;
-    }
-    #overview.page.active #activityContributionArea,
-    #overview.page.active #activityContributions,
-    #training.page.active #trainingStatusTimeline {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-
-    /* Activities: two columns with Latest and Total kept in separate columns. */
-    #activities.page.active > .grid,
-    #activities.page.active .activities-grid,
-    #activities.page.active .activity-summary-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-    }
-    #activities.page.active .latest,
-    #activities.page.active .latest-card,
-    #activities.page.active [data-group="latest"] {
-      grid-column: 1 !important;
-    }
-    #activities.page.active .total,
-    #activities.page.active .total-card,
-    #activities.page.active [data-group="total"] {
-      grid-column: 2 !important;
-    }
-
-    /* Race Predictor: four cards arranged as 2 x 2. */
-    #racePredictor.page.active > .grid,
-    #race-predictor.page.active > .grid,
-    #racePredictor.page.active .race-predictor-grid,
-    #race-predictor.page.active .race-predictor-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-    }
-
-    /* Improve Performance: portrait layout without overlapping controls. */
-    .performance-page .performance-layout,
-    .performance-page .plan-form-grid {
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-auto-flow: row !important;
-    }
-    .performance-page .plan-form-grid > label,
-    html.is-maximized-mode .performance-page .plan-form-grid > label:nth-child(n) {
-      grid-column: 1 !important;
-      grid-row: auto !important;
+      min-height: 42px !important;
+      padding: 9px 13px !important;
+      font-size: 15px !important;
+      line-height: 1.2 !important;
     }
 
   }
