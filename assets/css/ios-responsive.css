@@ -5,131 +5,160 @@
   --safe-left: env(safe-area-inset-left, 0px);
 }
 
-/* This file intentionally affects iOS/iPadOS Safari portrait view only. */
+/* iOS/iPadOS Safari portrait only. Loaded after styles.css. */
 @supports (-webkit-touch-callout: none) {
   @media (orientation: portrait) and (max-width: 1024px) {
     *, *::before, *::after { box-sizing: border-box; }
 
-    html {
+    html, body {
       width: 100% !important;
       height: 100% !important;
+      min-height: 0 !important;
+      margin: 0 !important;
       overflow: hidden !important;
       -webkit-text-size-adjust: 100%;
     }
 
     body {
-      display: grid !important;
-      grid-template-rows: max-content minmax(0, 1fr) !important;
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 0 !important;
-      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
       padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left) !important;
-      overflow: hidden !important;
-      position: static !important;
     }
 
-    header,
-    .head {
+    header {
       position: relative !important;
-      inset: auto !important;
+      top: auto !important;
+      z-index: 20 !important;
+      flex: 0 0 auto !important;
       width: 100% !important;
       height: auto !important;
-      min-height: 0 !important;
-      max-height: none !important;
     }
-
-    header { grid-row: 1 !important; z-index: 20 !important; }
 
     .head {
       display: grid !important;
       grid-template-columns: minmax(0, 1fr) auto !important;
       grid-template-areas: "brand actions" "tabs tabs" !important;
-      gap: 8px !important;
-      padding: 8px 10px !important;
+      align-items: center !important;
+      gap: 6px 8px !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 7px 8px 8px !important;
     }
 
-    .brand { grid-area: brand !important; min-width: 0 !important; }
-    .actions { grid-area: actions !important; }
+    .brand {
+      grid-area: brand !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .logo {
+      flex: 0 0 30px !important;
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 8px !important;
+    }
+
+    .title {
+      max-width: 100% !important;
+      font-size: 13px !important;
+      line-height: 1.15 !important;
+      white-space: nowrap !important;
+      text-overflow: ellipsis !important;
+      overflow: hidden !important;
+    }
+
+    .sub { font-size: 8px !important; }
+
+    .actions {
+      grid-area: actions !important;
+      justify-self: end !important;
+      min-width: max-content !important;
+      gap: 5px !important;
+    }
+
+    .iconbtn {
+      width: 34px !important;
+      height: 34px !important;
+      border-radius: 9px !important;
+    }
+
     .tabs {
       grid-area: tabs !important;
       display: flex !important;
       justify-content: flex-start !important;
+      gap: 4px !important;
       width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      padding: 3px !important;
+      white-space: nowrap !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
       -webkit-overflow-scrolling: touch !important;
       scrollbar-width: none !important;
     }
-    .tabs::-webkit-scrollbar { display: none !important; }
-    .tab { flex: 0 0 auto !important; white-space: nowrap !important; }
 
-    /* Upload: only upload content is present. No filter can appear. */
-    body.no-data #workspace,
-    body:not(.has-data) #workspace {
-      display: none !important;
+    .tabs::-webkit-scrollbar { display: none !important; }
+
+    .tab {
+      flex: 0 0 auto !important;
+      min-width: max-content !important;
+      min-height: 34px !important;
+      padding: 6px 9px !important;
+      font-size: 11px !important;
+      line-height: 1.15 !important;
     }
 
     #uploadScreen {
-      grid-row: 2 !important;
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 0 !important;
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-    }
-
-    body.has-data #uploadScreen { display: none !important; }
-
-    /* The workspace begins below the tabs and is the only vertical scroller. */
-    body.has-data #workspace,
-    html.is-maximized-mode body.has-data #workspace {
-      grid-row: 2 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 0 !important;
-      max-height: none !important;
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      overscroll-behavior-y: contain !important;
-    }
-
-    #filterPanel,
-    html.is-maximized-mode #filterPanel {
-      position: relative !important;
-      inset: auto !important;
-      z-index: auto !important;
-      flex: 0 0 auto !important;
+      flex: 1 1 0 !important;
       width: 100% !important;
       height: auto !important;
       min-height: 0 !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    body.no-data #workspace,
+    body:not(.has-data) #workspace { display: none !important; }
+
+    #workspace {
+      flex: 1 1 0 !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    #filterPanel {
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
       max-height: none !important;
       overflow: visible !important;
-      transform: none !important;
     }
 
     #workspace:has(#data.page.active) #filterPanel,
     #filterPanel.no-filter,
     #filterPanel[hidden] { display: none !important; }
 
-    #workspace > main,
-    html.is-maximized-mode #workspace > main {
+    main,
+    html.is-maximized-mode main {
       display: block !important;
-      position: relative !important;
-      flex: 0 0 auto !important;
       width: 100% !important;
       height: auto !important;
       min-height: 0 !important;
       max-height: none !important;
+      padding: 8px !important;
       overflow: visible !important;
-      padding-bottom: 24px !important;
     }
 
     main > .page:not(.active) { display: none !important; }
+
     main > .page.active,
     html.is-maximized-mode main > .page.active {
       display: block !important;
@@ -140,23 +169,6 @@
       max-height: none !important;
       overflow: visible !important;
       transform: none !important;
-      zoom: 1 !important;
-    }
-
-    /* All ordinary sections and cards are full width. */
-    .page.active > .grid,
-    .page.active > .twocol,
-    .page.active .fit-overview-row,
-    .page.active .overview-chart-row,
-    .page.active .training-main,
-    .page.active .performance-layout {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
-      height: auto !important;
-      overflow: visible !important;
     }
 
     .page.active .card {
@@ -164,305 +176,517 @@
       min-width: 0 !important;
       max-width: 100% !important;
       height: auto !important;
+      min-height: 0 !important;
       max-height: none !important;
     }
 
-    /* Overview and Training Insights: only chart cards use two columns. */
-    #overview.page.active .overview-chart-row,
-    #training.page.active .training-main {
+    /* Overview: top cards and KPIs use two columns. Chart uses full width. */
+    #overview.page.active {
+      display: grid !important;
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      align-content: start !important;
+      gap: 10px !important;
     }
 
-    #overview.page.active .overview-chart-row > .card:has(.chart),
-    #training.page.active .training-main > .card:has(.chart) {
-      grid-column: auto !important;
-      min-height: 250px !important;
+    #overview #activityContributionArea {
+      display: contents !important;
+    }
+
+    #overview #activityContributionArea > .card {
+      grid-area: auto !important;
+      min-height: 210px !important;
       overflow: hidden !important;
     }
 
-    #overview.page.active .overview-chart-row > .card:not(:has(.chart)),
-    #training.page.active .training-main > .card:not(:has(.chart)) {
+    #overview #kpis {
+      grid-area: auto !important;
       grid-column: 1 / -1 !important;
-    }
-
-    /* Actual HTML places Activity Contributions in #activityContributionArea. */
-    #overview.page.active #activityContributionArea,
-    #overview.page.active #activityContributionArea > .card,
-    #overview.page.active #activityContributions,
-    #training.page.active #trainingStatusTimeline {
-      display: block !important;
-      visibility: visible !important;
-      opacity: 1 !important;
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 8px !important;
       width: 100% !important;
       height: auto !important;
-      max-height: none !important;
+      overflow: visible !important;
     }
 
-    #overview.page.active #activityContributionArea > .card,
-    #training.page.active .training-main > .card:has(#trainingStatusTimeline) {
+    #overview .overview-chart-row {
+      grid-area: auto !important;
       grid-column: 1 / -1 !important;
-      min-height: 180px !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+      min-height: 0 !important;
+    }
+
+    #overview .overview-chart-row .card {
+      height: auto !important;
+      min-height: 330px !important;
+      overflow: hidden !important;
+    }
+
+    #overview .overview-chart-row .chart {
+      width: 100% !important;
+      height: 280px !important;
+      min-height: 280px !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+    }
+
+    #activityContributions {
+      display: grid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      grid-template-rows: repeat(7, minmax(10px, 1fr)) !important;
+      grid-auto-flow: column !important;
+      grid-auto-columns: minmax(10px, 1fr) !important;
+      width: max-content !important;
+      min-width: 100% !important;
+      min-height: 120px !important;
+      overflow: visible !important;
+    }
+
+    #activityContributionArea > .card:first-child {
       overflow-x: auto !important;
-      overflow-y: visible !important;
       -webkit-overflow-scrolling: touch !important;
     }
 
-    #overview.page.active #activityContributions,
-    #training.page.active #trainingStatusTimeline {
-      min-width: max-content !important;
-      min-height: 130px !important;
+    /* Training Insights: KPI cards and content cards use two columns. */
+    #training.page.active {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      align-content: start !important;
+      gap: 10px !important;
       overflow: visible !important;
     }
 
-    /* Improve Performance. */
-    .performance-page .performance-layout,
+    #trainingKpis {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #trainingKpis .kpi {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 96px !important;
+    }
+
+    #training .training-main {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #training .training-main > .card:nth-child(n) {
+      grid-area: auto !important;
+      min-height: 260px !important;
+      overflow: hidden !important;
+    }
+
+    #training .training-main > .card:first-child,
+    #training .training-main > .card:nth-child(3),
+    #training .training-main > .card:nth-child(4) {
+      grid-column: 1 / -1 !important;
+    }
+
+    #training .training-main > .card:has(.chart) .chart {
+      width: 100% !important;
+      height: 280px !important;
+      min-height: 280px !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+    }
+
+    #trainingStatusTimeline {
+      display: grid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      grid-template-rows: repeat(7, minmax(12px, 1fr)) !important;
+      grid-auto-flow: column !important;
+      grid-template-columns: repeat(var(--weeks), minmax(8px, 1fr)) !important;
+      grid-auto-columns: minmax(8px, 1fr) !important;
+      width: max-content !important;
+      min-width: 100% !important;
+      height: auto !important;
+      min-height: 150px !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+      overflow: visible !important;
+    }
+
+    #training .training-main > .card:first-child {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Activities: Latest and Total groups remain separate, each with two columns. */
+    #running.page.active {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      overflow: visible !important;
+    }
+
+    #running #runKpis {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #running #runKpis .activity-card-group {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 8px !important;
+      width: 100% !important;
+      overflow: visible !important;
+    }
+
+    #running #runKpis .activity-card-group > h4 {
+      grid-column: 1 / -1 !important;
+      position: static !important;
+      writing-mode: horizontal-tb !important;
+      transform: none !important;
+      min-width: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    #running #runKpis .kpi {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 92px !important;
+    }
+
+    #running > .grid.twocol {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #running > .grid.twocol > .card {
+      min-height: 300px !important;
+    }
+
+    #running > .grid.twocol .chart {
+      height: 250px !important;
+      min-height: 250px !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+    }
+
+    /* Race Predictor: four KPI cards in a 2 x 2 grid, chart below full width. */
+    #race.page.active {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      overflow: visible !important;
+    }
+
+    #race #raceKpis {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: repeat(2, auto) !important;
+      grid-auto-flow: row !important;
+      gap: 8px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #race #raceKpis .kpi {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 100px !important;
+    }
+
+    #race > .card {
+      grid-area: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 330px !important;
+    }
+
+    #race > .card .chart {
+      width: 100% !important;
+      height: 280px !important;
+      min-height: 280px !important;
+      max-height: none !important;
+      aspect-ratio: auto !important;
+    }
+
+    /* Improve Performance: portrait stack with no fixed grid positions. */
+    #data.performance-page.active {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding-bottom: 20px !important;
+      overflow: visible !important;
+    }
+
+    .performance-page .performance-layout {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .performance-page .plan-form-grid,
+    html.is-maximized-mode .performance-page .plan-form-grid,
+    html:not(.is-maximized-mode) .performance-page .plan-form-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
+      grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      overflow: visible !important;
+    }
+
+    .performance-page .plan-form-grid > label:nth-child(n),
+    html.is-maximized-mode .performance-page .plan-form-grid > label:nth-child(n),
+    html:not(.is-maximized-mode) .performance-page .plan-form-grid > label:nth-child(n) {
+      grid-area: auto !important;
+      justify-self: stretch !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+
+    .performance-page .available-days-row,
+    html:not(.is-maximized-mode) .performance-page .available-days-row {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+
+    .performance-page .available-days,
+    html:not(.is-maximized-mode) .performance-page .available-days {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
     .performance-page .weekly-plan-card {
       width: 100% !important;
       height: auto !important;
-      max-height: none !important;
+      margin-top: 10px !important;
       overflow: visible !important;
     }
 
-    .performance-page .plan-form-grid {
+    .performance-page #weeklyPlan.weekly-plan,
+    html.is-maximized-mode .performance-page #weeklyPlan.weekly-plan,
+    html:not(.is-maximized-mode) .performance-page #weeklyPlan.weekly-plan {
       display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-columns: 1fr !important;
+      grid-template-rows: none !important;
       grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
       gap: 10px !important;
       width: 100% !important;
       height: auto !important;
-      overflow: visible !important;
-    }
-
-    .performance-page .plan-form-grid > label,
-    html.is-maximized-mode .performance-page .plan-form-grid > label,
-    html.is-maximized-mode .performance-page .plan-form-grid > label:first-child,
-    html.is-maximized-mode .performance-page .plan-form-grid > label:nth-child(n) {
-      grid-column: auto !important;
-      grid-row: auto !important;
-      display: grid !important;
-      grid-template-columns: max-content 18px minmax(0, 1fr) !important;
-      grid-template-rows: auto auto !important;
-      align-items: center !important;
-      justify-content: start !important;
-      column-gap: 4px !important;
-      row-gap: 6px !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      height: auto !important;
-      margin: 0 !important;
-      overflow: visible !important;
-    }
-
-    .performance-page .plan-form-grid .plan-hint,
-    .performance-page #planTargetHelp {
-      grid-column: 2 !important;
-      grid-row: 1 !important;
-      position: static !important;
-      inset: auto !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      justify-self: start !important;
-      width: 18px !important;
-      height: 18px !important;
-      min-width: 18px !important;
-      min-height: 18px !important;
-      max-width: 18px !important;
-      max-height: 18px !important;
-      aspect-ratio: 1 / 1 !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      border-radius: 50% !important;
-      line-height: 1 !important;
-      transform: none !important;
-    }
-
-    .performance-page .plan-form-grid input,
-    .performance-page .plan-form-grid select,
-    .performance-page .plan-form-grid .input-unit {
-      grid-column: 1 / -1 !important;
-      grid-row: 2 !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-    }
-
-    .performance-page #planAvgPace {
-      grid-column: 1 / -1 !important;
-      margin: 0 !important;
-      white-space: normal !important;
-    }
-
-    .performance-page #weeklyPlan.weekly-plan {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-template-rows: repeat(7, auto) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
-      height: auto !important;
-      max-height: none !important;
       overflow: visible !important;
     }
 
     .performance-page #weeklyPlan > .plan-day {
-      grid-column: 1 !important;
-      grid-row: auto !important;
       width: 100% !important;
       min-width: 0 !important;
       max-width: 100% !important;
       height: auto !important;
+      min-height: 150px !important;
+      overflow: hidden !important;
+    }
+  }
+}
+
+/* Compatibility overrides for app.js and ios-mobile-ui.js. */
+@supports (-webkit-touch-callout: none) {
+  @media (orientation: portrait) and (max-width: 1024px) {
+    /* ios-mobile-ui.js injects height:auto/overflow:auto after linked CSS.
+       Use higher-specificity rules so scrolling stays below the header/tabs. */
+    html:root,
+    html:root body {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    html:root body #workspace {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      flex: 1 1 0 !important;
+      width: 100% !important;
+      height: 0 !important;
+      min-height: 0 !important;
       max-height: none !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
     }
 
-
-    /* Header: smaller and protected from Download/Delete overlap. */
-    .head {
-      grid-template-columns: minmax(0, 1fr) max-content !important;
-      column-gap: 6px !important;
-      row-gap: 8px !important;
-      padding: 8px !important;
-    }
-    .brand {
-      min-width: 0 !important;
-      overflow: hidden !important;
-    }
-    .brand h1,
-    .brand .title,
-    .dashboard-title {
-      max-width: 100% !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      font-size: clamp(16px, 4.2vw, 19px) !important;
-      line-height: 1.15 !important;
-    }
-    .actions {
-      min-width: max-content !important;
-      justify-self: end !important;
-      position: relative !important;
-      z-index: 2 !important;
-    }
-    .tabs { gap: 6px !important; }
-    .tab {
-      min-height: 38px !important;
-      padding: 7px 10px !important;
-      font-size: 14px !important;
-      line-height: 1.15 !important;
+    html:root body main,
+    html:root body main > .page.active,
+    html:root body #data.page.active {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      zoom: 1 !important;
+      transform: none !important;
     }
 
-    /* Overview: summary cards 2 columns; every chart is full screen width. */
-    #overview.page.active > .grid,
-    #overview.page.active > .twocol,
-    #overview.page.active .fit-overview-row,
-    #overall.page.active > .grid,
-    #overall.page.active > .twocol,
-    #overall.page.active .fit-overview-row {
+    /* app.js creates two .activity-card-group elements: Latest and Total. */
+    html:root body #running #runKpis {
       display: grid !important;
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
       gap: 10px !important;
-      width: 100% !important;
-    }
-    #overview.page.active .overview-chart-row,
-    #overall.page.active .overview-chart-row {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      gap: 10px !important;
-      width: 100% !important;
-    }
-    #overview.page.active .overview-chart-row > .card,
-    #overall.page.active .overview-chart-row > .card,
-    #overview.page.active .card:has(canvas),
-    #overall.page.active .card:has(canvas),
-    #overview.page.active .card:has(.chart),
-    #overall.page.active .card:has(.chart),
-    #overview.page.active #activityContributionArea,
-    #overall.page.active #activityContributionArea {
-      grid-column: 1 / -1 !important;
-      width: 100% !important;
-      min-width: 0 !important;
     }
 
-    /* Training Insights: cards 2 columns; charts/timeline full screen width. */
-    #training.page.active .training-main,
-    #trainingInsights.page.active .training-main,
-    #training-insights.page.active .training-main {
+    html:root body #running #runKpis .activity-card-group {
       display: grid !important;
       grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
+      align-content: start !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      overflow: visible !important;
     }
-    #training.page.active .card:has(canvas),
-    #training.page.active .card:has(.chart),
-    #training.page.active .card:has(#trainingStatusTimeline),
-    #trainingInsights.page.active .card:has(canvas),
-    #trainingInsights.page.active .card:has(.chart),
-    #trainingInsights.page.active .card:has(#trainingStatusTimeline),
-    #training-insights.page.active .card:has(canvas),
-    #training-insights.page.active .card:has(.chart),
-    #training-insights.page.active .card:has(#trainingStatusTimeline) {
+
+    html:root body #running #runKpis .activity-card-group > h4 {
       grid-column: 1 / -1 !important;
+    }
+
+    /* app.js renders exactly four Race Predictor KPI cards. */
+    html:root body #race #raceKpis {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: repeat(2, auto) !important;
+      grid-auto-flow: row !important;
+      overflow: visible !important;
+    }
+
+    /* app.js draws directly to canvas, so the CSS box must have a real size. */
+    html:root body #overview .overview-chart-row,
+    html:root body #overview .overview-chart-row > .card,
+    html:root body #overview .overview-chart-row .chart,
+    html:root body #training .training-main > .card:has(.chart),
+    html:root body #training .training-main > .card:has(.chart) .chart {
       width: 100% !important;
       min-width: 0 !important;
     }
 
-    /* Ensure previously hidden contribution/timeline content is visible. */
-    #activityContributionArea,
-    #activityContributions,
-    #trainingStatusTimeline {
+    html:root body #overview .overview-chart-row .chart,
+    html:root body #training .training-main > .card:has(.chart) .chart {
+      height: 280px !important;
+      min-height: 280px !important;
+      max-height: 280px !important;
+      aspect-ratio: auto !important;
+      flex: none !important;
+    }
+
+    html:root body #overview .overview-chart-row canvas,
+    html:root body #training .training-main canvas {
       display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* app.js dynamically shows/hides contributions and sets --weeks. */
+    html:root body #activityContributionArea:not(.dynamic-hidden),
+    html:root body #activityContributions,
+    html:root body #trainingStatusTimeline {
       visibility: visible !important;
       opacity: 1 !important;
-      width: 100% !important;
-      max-width: 100% !important;
     }
 
-    /* Activities: two clear columns. */
-    #activities.page.active > .grid,
-    #activities.page.active > .twocol,
-    #activities.page.active .activities-grid,
-    #activity.page.active > .grid,
-    #activity.page.active > .twocol {
+    html:root body #activityContributions,
+    html:root body #trainingStatusTimeline {
       display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
     }
 
-    /* Race Predictor: 2 x 2 card layout. */
-    #racePredictor.page.active > .grid,
-    #racePredictor.page.active > .twocol,
-    #race-predictor.page.active > .grid,
-    #race-predictor.page.active > .twocol,
-    #race.page.active > .grid,
-    #race.page.active > .twocol {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
+    /* Override fixed desktop grid areas added by styles.css. */
+    html:root body #training .training-main > .card:nth-child(n) {
+      grid-area: auto !important;
     }
 
-    /* Improve Performance: stack portrait content without overlap. */
-    .performance-page .performance-layout {
+    html:root body #training .training-main > .card:first-child,
+    html:root body #training .training-main > .card:nth-child(3),
+    html:root body #training .training-main > .card:nth-child(4) {
+      grid-column: 1 / -1 !important;
+    }
+
+    /* ios-mobile-ui.js also targets Weekly Plan after page CSS loads. */
+    html:root body #data #weeklyPlan {
       display: grid !important;
       grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: none !important;
       grid-auto-flow: row !important;
-      gap: 10px !important;
-      width: 100% !important;
-    }
-    .performance-page .performance-layout > *,
-    .performance-page .plan-form-grid > label {
-      grid-column: 1 !important;
-      grid-row: auto !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
+      grid-auto-rows: auto !important;
+      height: auto !important;
+      overflow: visible !important;
     }
 
+    html:root body #data #weeklyPlan > .plan-day {
+      grid-column: 1 !important;
+      grid-row: auto !important;
+      height: auto !important;
+      min-height: 150px !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /* Narrow iPhone portrait: preserve two columns requested for cards. */
+  @media (orientation: portrait) and (max-width: 560px) {
+    html:root body #overview.page.active,
+    html:root body #overview #kpis,
+    html:root body #trainingKpis,
+    html:root body #training .training-main,
+    html:root body #running #runKpis,
+    html:root body #running #runKpis .activity-card-group,
+    html:root body #running > .grid.twocol,
+    html:root body #race #raceKpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    html:root body #overview .overview-chart-row,
+    html:root body #training .training-main > .card:first-child,
+    html:root body #training .training-main > .card:nth-child(3),
+    html:root body #training .training-main > .card:nth-child(4) {
+      grid-column: 1 / -1 !important;
+    }
   }
 }
