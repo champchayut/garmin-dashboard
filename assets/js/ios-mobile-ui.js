@@ -1,10 +1,10 @@
 (() => {
   "use strict";
 
-  const STYLE_ID = "ios-portrait-scroll-fix";
+  const STYLE_ID = "ios-improve-performance-layout";
   let resizeTimer = 0;
 
-  function installPortraitStyles() {
+  function installStyles() {
     if (document.getElementById(STYLE_ID)) return;
 
     const style = document.createElement("style");
@@ -21,11 +21,6 @@
           -webkit-overflow-scrolling: touch !important;
         }
 
-        body.has-data,
-        body:not(.no-data) {
-          overflow-y: auto !important;
-        }
-
         #workspace {
           display: block !important;
           width: 100% !important;
@@ -35,21 +30,62 @@
           overflow: visible !important;
         }
 
-        #filterPanel {
-          position: relative !important;
-          inset: auto !important;
-          display: block !important;
+        #workspace:has(#data.page.active) #filterPanel,
+        body:has(#data.page.active) #filterPanel {
+          display: none !important;
+        }
+
+        main,
+        #data.page,
+        #data.page.active,
+        #data .performance-page,
+        #data .performance-page.page.active {
           width: 100% !important;
           height: auto !important;
           min-height: 0 !important;
           max-height: none !important;
           overflow: visible !important;
-          transform: none !important;
+          zoom: 1 !important;
         }
 
-        #filterPanel.no-filter,
-        #filterPanel[hidden] {
-          display: none !important;
+        #data.page.active {
+          display: block !important;
+        }
+
+        #data #weeklyPlan {
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) !important;
+          grid-template-rows: repeat(7, auto) !important;
+          grid-auto-flow: row !important;
+          grid-auto-columns: minmax(0, 1fr) !important;
+          width: 100% !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
+          gap: 10px !important;
+          overflow: visible !important;
+        }
+
+        #data #weeklyPlan > .plan-day {
+          grid-column: 1 !important;
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: none !important;
+          height: auto !important;
+          min-height: 0 !important;
+          margin: 0 !important;
+          overflow: visible !important;
+        }
+
+        #data .weekly-plan-card,
+        #data .weekly-plan,
+        #data .plan-result,
+        #data .plan-output {
+          width: 100% !important;
+          height: auto !important;
+          min-height: 0 !important;
+          max-height: none !important;
+          overflow: visible !important;
         }
 
         #mobileFilterToggle,
@@ -59,60 +95,37 @@
         [data-action="hide-filter"] {
           display: none !important;
         }
-
-        main {
-          display: block !important;
-          width: 100% !important;
-          height: auto !important;
-          min-height: 0 !important;
-          max-height: none !important;
-          overflow: visible !important;
-          padding-bottom: max(28px, env(safe-area-inset-bottom)) !important;
-        }
-
-        main > .page,
-        main > .page.active,
-        .performance-page,
-        .performance-page.page.active {
-          width: 100% !important;
-          height: auto !important;
-          min-height: 0 !important;
-          max-height: none !important;
-          overflow: visible !important;
-          zoom: 1 !important;
-        }
-
-        .page.active .card,
-        .weekly-plan-card,
-        .weekly-plan {
-          max-height: none !important;
-          overflow: visible !important;
-        }
       }
     `;
     document.head.appendChild(style);
   }
 
-  function isImprovePerformance() {
-    return document.querySelector(".tab.active")?.dataset.page === "data";
+  function activePageIsImprovePerformance() {
+    return document.querySelector(".tab.active")?.dataset.page === "data" ||
+      document.getElementById("data")?.classList.contains("active");
   }
 
-  function syncFilterPanel() {
+  function syncFilter() {
     document.getElementById("mobileFilterToggle")?.remove();
 
     const panel = document.getElementById("filterPanel");
     if (!panel) return;
 
-    const hide = isImprovePerformance();
+    const hide = activePageIsImprovePerformance();
     panel.classList.remove("mobile-collapsed");
     panel.classList.toggle("no-filter", hide);
     panel.hidden = hide;
 
-    if (hide) panel.setAttribute("aria-hidden", "true");
-    else panel.removeAttribute("aria-hidden");
+    if (hide) {
+      panel.setAttribute("aria-hidden", "true");
+      panel.style.setProperty("display", "none", "important");
+    } else {
+      panel.removeAttribute("aria-hidden");
+      panel.style.removeProperty("display");
+    }
   }
 
-  function resizeActiveCharts() {
+  function resizeCharts() {
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
       window.requestAnimationFrame(() => {
@@ -126,20 +139,19 @@
     }, 180);
   }
 
-  function syncLayout({ scrollTop = false } = {}) {
-    installPortraitStyles();
-    syncFilterPanel();
+  function syncLayout(scrollTop = false) {
+    installStyles();
+    syncFilter();
     if (scrollTop) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    resizeActiveCharts();
+    resizeCharts();
   }
 
   function setup() {
-    installPortraitStyles();
     syncLayout();
 
     document.addEventListener("click", event => {
       if (!event.target.closest(".tab,[role=tab],.nav-item")) return;
-      window.setTimeout(() => syncLayout({ scrollTop: true }), 60);
+      window.setTimeout(() => syncLayout(true), 60);
     }, { passive: true });
 
     window.addEventListener("resize", () => syncLayout(), { passive: true });
