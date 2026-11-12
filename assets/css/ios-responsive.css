@@ -876,3 +876,272 @@ body {
     }
   }
 }
+
+/* =========================================================
+   iOS VIEW v12 - portrait only
+   Header/tabs stay fixed; workspace alone scrolls.
+   ========================================================= */
+@supports (-webkit-touch-callout: none) {
+  @media (orientation: portrait) and (max-width: 1024px) {
+    /* 1) Keep Dashboard header and tabs outside the vertical scroller. */
+    html,
+    body {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
+      max-height: 100% !important;
+      overflow: hidden !important;
+      position: static !important;
+    }
+
+    body {
+      display: flex !important;
+      flex-direction: column !important;
+      padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left) !important;
+    }
+
+    body > header,
+    header,
+    .head {
+      position: relative !important;
+      inset: auto !important;
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      z-index: 50 !important;
+    }
+
+    #workspace,
+    html.is-maximized-mode #workspace {
+      position: relative !important;
+      inset: auto !important;
+      display: block !important;
+      flex: 1 1 auto !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-y: contain !important;
+      padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
+    }
+
+    /* Upload screen must never show the filter. */
+    body.no-data #filterPanel,
+    body:not(.has-data) #filterPanel,
+    #workspace:has(#uploadScreen:not(.hidden)) #filterPanel {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    /* Filter stays in normal flow. It must not overlay page content. */
+    body.has-data #filterPanel:not(.no-filter):not([hidden]) {
+      position: relative !important;
+      inset: auto !important;
+      z-index: auto !important;
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      transform: none !important;
+    }
+
+    #workspace:has(.performance-page.page.active) #filterPanel,
+    #workspace:has(#data.page.active) #filterPanel,
+    #filterPanel.no-filter,
+    #filterPanel[hidden] {
+      display: none !important;
+    }
+
+    #workspace > main,
+    html.is-maximized-mode #workspace > main,
+    main > .page.active,
+    html.is-maximized-mode main > .page.active,
+    main .performance-page.page.active {
+      position: relative !important;
+      inset: auto !important;
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      transform: none !important;
+      zoom: 1 !important;
+    }
+
+    main > .page:not(.active) {
+      display: none !important;
+    }
+
+    /* 3) Default iOS portrait sections are one row / one column. */
+    .page.active > .grid,
+    .page.active > .twocol,
+    .page.active .type-layout,
+    .page.active .performance-layout {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Only chart-card groups on Overview and Training Insights are 2 columns.
+       Six chart cards naturally form 3 rows x 2 columns. */
+    #overview.page.active .overview-chart-row,
+    #overview.page.active .fit-overview-row,
+    #training.page.active .training-main {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    #overview.page.active .overview-chart-row > .card,
+    #overview.page.active .fit-overview-row > .card,
+    #training.page.active .training-main > .card {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: 250px !important;
+      max-height: none !important;
+    }
+
+    /* Activity Contributions is a full-width non-chart row and remains visible. */
+    #overview.page.active .card:has(.contribution-grid),
+    #training.page.active .card:has(.training-contributions),
+    .page.active .card:has(.contribution-grid),
+    .page.active .card:has(.training-contributions) {
+      display: block !important;
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: 170px !important;
+      max-height: none !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+    }
+
+    .page.active .contribution-grid,
+    .page.active .training-contributions {
+      display: grid !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: max-content !important;
+      min-width: 100% !important;
+      height: auto !important;
+      min-height: 120px !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    .page.active .card:has(.contribution-grid),
+    .page.active .card:has(.training-contributions) {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* 4) Improve Performance help icon stays directly beside the topic.
+       The icon is a true 1:1 circle and does not stretch a field. */
+    .performance-page .plan-form-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      grid-auto-rows: auto !important;
+      align-items: start !important;
+      gap: 10px !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .performance-page .plan-form-grid > label,
+    html.is-maximized-mode .performance-page .plan-form-grid > label,
+    html.is-maximized-mode .performance-page .plan-form-grid > label:first-child,
+    html.is-maximized-mode .performance-page .plan-form-grid > label:nth-child(n) {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      display: grid !important;
+      grid-template-columns: max-content 18px minmax(0, 1fr) !important;
+      grid-template-rows: auto auto !important;
+      justify-content: start !important;
+      align-items: center !important;
+      column-gap: 4px !important;
+      row-gap: 6px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      overflow: visible !important;
+    }
+
+    .performance-page .plan-form-grid .hint-dot,
+    .performance-page .plan-form-grid [id$="Help"],
+    .performance-page #planTargetHelp {
+      grid-column: 2 !important;
+      grid-row: 1 !important;
+      position: static !important;
+      inset: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      justify-self: start !important;
+      align-self: center !important;
+      box-sizing: border-box !important;
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      max-width: 18px !important;
+      max-height: 18px !important;
+      aspect-ratio: 1 / 1 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-radius: 50% !important;
+      line-height: 1 !important;
+      transform: none !important;
+    }
+
+    .performance-page .plan-form-grid input,
+    .performance-page .plan-form-grid select,
+    .performance-page .plan-form-grid .input-unit {
+      grid-column: 1 / -1 !important;
+      grid-row: 2 !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+
+    .performance-page #planAvgPace {
+      grid-column: 1 / -1 !important;
+      width: auto !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      white-space: normal !important;
+      line-height: 1.2 !important;
+    }
+  }
+}
