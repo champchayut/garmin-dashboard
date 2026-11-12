@@ -317,20 +317,17 @@
     }
 
 
-    /* Header readability without overlapping Download/Delete buttons. */
+    /* Header: smaller and protected from Download/Delete overlap. */
     .head {
       grid-template-columns: minmax(0, 1fr) max-content !important;
-      column-gap: 8px !important;
-      row-gap: 10px !important;
-      padding: 10px !important;
+      column-gap: 6px !important;
+      row-gap: 8px !important;
+      padding: 8px !important;
     }
-
     .brand {
       min-width: 0 !important;
-      max-width: 100% !important;
       overflow: hidden !important;
     }
-
     .brand h1,
     .brand .title,
     .dashboard-title {
@@ -339,28 +336,132 @@
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
-      font-size: clamp(18px, 4.8vw, 22px) !important;
-      line-height: 1.2 !important;
+      font-size: clamp(16px, 4.2vw, 19px) !important;
+      line-height: 1.15 !important;
     }
-
     .actions {
       min-width: max-content !important;
-      max-width: max-content !important;
-      flex: 0 0 auto !important;
       justify-self: end !important;
       position: relative !important;
-      z-index: 1 !important;
+      z-index: 2 !important;
     }
-
-    .tabs {
-      gap: 8px !important;
-    }
-
+    .tabs { gap: 6px !important; }
     .tab {
-      min-height: 42px !important;
-      padding: 9px 13px !important;
-      font-size: 15px !important;
-      line-height: 1.2 !important;
+      min-height: 38px !important;
+      padding: 7px 10px !important;
+      font-size: 14px !important;
+      line-height: 1.15 !important;
+    }
+
+    /* Overview: summary cards 2 columns; every chart is full screen width. */
+    #overview.page.active > .grid,
+    #overview.page.active > .twocol,
+    #overview.page.active .fit-overview-row,
+    #overall.page.active > .grid,
+    #overall.page.active > .twocol,
+    #overall.page.active .fit-overview-row {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    #overview.page.active .overview-chart-row,
+    #overall.page.active .overview-chart-row {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    #overview.page.active .overview-chart-row > .card,
+    #overall.page.active .overview-chart-row > .card,
+    #overview.page.active .card:has(canvas),
+    #overall.page.active .card:has(canvas),
+    #overview.page.active .card:has(.chart),
+    #overall.page.active .card:has(.chart),
+    #overview.page.active #activityContributionArea,
+    #overall.page.active #activityContributionArea {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    /* Training Insights: cards 2 columns; charts/timeline full screen width. */
+    #training.page.active .training-main,
+    #trainingInsights.page.active .training-main,
+    #training-insights.page.active .training-main {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    #training.page.active .card:has(canvas),
+    #training.page.active .card:has(.chart),
+    #training.page.active .card:has(#trainingStatusTimeline),
+    #trainingInsights.page.active .card:has(canvas),
+    #trainingInsights.page.active .card:has(.chart),
+    #trainingInsights.page.active .card:has(#trainingStatusTimeline),
+    #training-insights.page.active .card:has(canvas),
+    #training-insights.page.active .card:has(.chart),
+    #training-insights.page.active .card:has(#trainingStatusTimeline) {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    /* Ensure previously hidden contribution/timeline content is visible. */
+    #activityContributionArea,
+    #activityContributions,
+    #trainingStatusTimeline {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Activities: two clear columns. */
+    #activities.page.active > .grid,
+    #activities.page.active > .twocol,
+    #activities.page.active .activities-grid,
+    #activity.page.active > .grid,
+    #activity.page.active > .twocol {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+
+    /* Race Predictor: 2 x 2 card layout. */
+    #racePredictor.page.active > .grid,
+    #racePredictor.page.active > .twocol,
+    #race-predictor.page.active > .grid,
+    #race-predictor.page.active > .twocol,
+    #race.page.active > .grid,
+    #race.page.active > .twocol {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-flow: row !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+
+    /* Improve Performance: stack portrait content without overlap. */
+    .performance-page .performance-layout {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-auto-flow: row !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    .performance-page .performance-layout > *,
+    .performance-page .plan-form-grid > label {
+      grid-column: 1 !important;
+      grid-row: auto !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
     }
 
   }
