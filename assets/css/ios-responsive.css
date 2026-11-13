@@ -8,7 +8,12 @@
 /* iOS/iPadOS Safari portrait only. */
 @supports (-webkit-touch-callout: none) {
   @media (orientation: portrait) and (max-width: 1024px) {
-    *, *::before, *::after { box-sizing: border-box; }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
     html,
     body,
@@ -81,7 +86,9 @@
       overflow: hidden !important;
     }
 
-    .sub { font-size: 9px !important; }
+    .sub {
+      font-size: 9px !important;
+    }
 
     .actions,
     html.is-maximized-mode .actions,
@@ -118,7 +125,9 @@
       scrollbar-width: none !important;
     }
 
-    .tabs::-webkit-scrollbar { display: none !important; }
+    .tabs::-webkit-scrollbar {
+      display: none !important;
+    }
 
     .tab,
     html.is-maximized-mode .tab {
@@ -138,7 +147,9 @@
     }
 
     body.no-data #workspace,
-    body:not(.has-data) #workspace { display: none !important; }
+    body:not(.has-data) #workspace {
+      display: none !important;
+    }
 
     #workspace,
     html.is-maximized-mode #workspace,
@@ -218,11 +229,13 @@
       overflow: visible !important;
     }
 
-    main > .page:not(.active) { display: none !important; }
+    main>.page:not(.active) {
+      display: none !important;
+    }
 
-    main > .page.active,
-    html.is-maximized-mode main > .page.active,
-    html:not(.is-maximized-mode) main > .page.active {
+    main>.page.active,
+    html.is-maximized-mode main>.page.active,
+    html:not(.is-maximized-mode) main>.page.active {
       position: relative !important;
       width: 100% !important;
       height: auto !important;
@@ -258,10 +271,10 @@
       overflow: visible !important;
     }
 
-    #sleep > .grid,
-    #recovery > .grid,
-    #fitness > .grid,
-    #running > .grid.twocol,
+    #sleep>.grid,
+    #recovery>.grid,
+    #fitness>.grid,
+    #running>.grid.twocol,
     #training .training-main {
       display: grid !important;
       grid-template-columns: minmax(0, 1fr) !important;
@@ -322,7 +335,7 @@
       width: 100% !important;
     }
 
-    #overview .fit-overview-row > .card:nth-child(n),
+    #overview .fit-overview-row>.card:nth-child(n),
     #overview #kpis,
     #overview .overview-chart-row {
       grid-area: auto !important;
@@ -374,15 +387,15 @@
       min-height: 104px !important;
     }
 
-    #training .training-main > .card:nth-child(n),
-    #training .training-main > .card:nth-child(2) {
+    #training .training-main>.card:nth-child(n),
+    #training .training-main>.card:nth-child(2) {
       grid-area: auto !important;
       grid-column: 1 !important;
       width: 100% !important;
       min-height: 0 !important;
     }
 
-    #training .training-main > .card:has(#trainingStatusTimeline) {
+    #training .training-main>.card:has(#trainingStatusTimeline) {
       min-height: 360px !important;
     }
 
@@ -426,7 +439,7 @@
       overflow: visible !important;
     }
 
-    #running #runKpis .activity-card-group > h4 {
+    #running #runKpis .activity-card-group>h4 {
       position: static !important;
       grid-column: 1 !important;
       min-width: 0 !important;
@@ -442,7 +455,7 @@
       min-height: 92px !important;
     }
 
-    #running > .grid.twocol > .card {
+    #running>.grid.twocol>.card {
       grid-area: auto !important;
       width: 100% !important;
       min-height: 0 !important;
@@ -453,14 +466,14 @@
       flex-direction: column !important;
     }
 
-    #running .card:has(#cZones) > h3,
-    #running .card:has(#cZones) > .chart,
-    #running .card:has(#cZones) > .chart-legend-note {
+    #running .card:has(#cZones)>h3,
+    #running .card:has(#cZones)>.chart,
+    #running .card:has(#cZones)>.chart-legend-note {
       grid-area: auto !important;
       width: 100% !important;
     }
 
-    #running .card:has(#cZones) > .chart-legend-note {
+    #running .card:has(#cZones)>.chart-legend-note {
       flex-flow: row wrap !important;
       white-space: normal !important;
       margin-bottom: 7px !important;
@@ -485,7 +498,7 @@
       min-height: 105px !important;
     }
 
-    #race > .card {
+    #race>.card {
       grid-area: auto !important;
       width: 100% !important;
       height: auto !important;
@@ -526,7 +539,7 @@
       overflow: visible !important;
     }
 
-    .performance-page .performance-layout > * {
+    .performance-page .performance-layout>* {
       width: 100% !important;
       min-width: 0 !important;
       max-width: 100% !important;
@@ -544,9 +557,9 @@
       width: 100% !important;
     }
 
-    .performance-page .plan-form-grid > label:nth-child(n),
-    html.is-maximized-mode .performance-page .plan-form-grid > label:nth-child(n),
-    html:not(.is-maximized-mode) .performance-page .plan-form-grid > label:nth-child(n) {
+    .performance-page .plan-form-grid>label:nth-child(n),
+    html.is-maximized-mode .performance-page .plan-form-grid>label:nth-child(n),
+    html:not(.is-maximized-mode) .performance-page .plan-form-grid>label:nth-child(n) {
       grid-area: auto !important;
       justify-self: stretch !important;
       width: 100% !important;
@@ -586,13 +599,167 @@
       overflow: visible !important;
     }
 
-    .performance-page #weeklyPlan > .plan-day {
+    .performance-page #weeklyPlan>.plan-day {
       grid-area: auto !important;
       width: 100% !important;
       min-width: 0 !important;
       max-width: 100% !important;
       height: auto !important;
       min-height: 150px !important;
+    }
+  }
+}
+
+/* iOS portrait layout fixes — append after existing rules */
+@supports (-webkit-touch-callout: none) {
+  @media (orientation: portrait) and (max-width: 1024px) {
+
+    /* 1. Larger title; allow wrapping instead of overlapping actions */
+    .head,
+    html.is-maximized-mode .head,
+    html:not(.is-maximized-mode) .head {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: start !important;
+    }
+
+    .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+
+    .brand> :not(.logo) {
+      min-width: 0 !important;
+    }
+
+    .title {
+      font-size: clamp(18px, 4.8vw, 24px) !important;
+      line-height: 1.15 !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-overflow: clip !important;
+    }
+
+    .actions,
+    html.is-maximized-mode .actions,
+    html:not(.is-maximized-mode) .actions {
+      align-self: start !important;
+      display: flex !important;
+      flex-wrap: nowrap !important;
+    }
+
+    /* 2. Filters occupy equal columns without horizontal overflow */
+    #filterPanel,
+    html.is-maximized-mode #filterPanel,
+    html:not(.is-maximized-mode) #filterPanel {
+      padding-inline: 10px !important;
+    }
+
+    #adaptiveFilters {
+      justify-items: stretch !important;
+      align-items: start !important;
+    }
+
+    #adaptiveFilters .afield {
+      width: 100% !important;
+      max-width: 100% !important;
+      grid-column: auto !important;
+    }
+
+    #adaptiveFilters .afield:last-child {
+      grid-column: 1 / -1 !important;
+    }
+
+    #adaptiveFilters .afield>* {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    #adaptiveFilters select,
+    #adaptiveFilters input,
+    #adaptiveFilters button {
+      font-size: 16px !important;
+      /* Avoid Safari input-focus zoom */
+    }
+
+    /* 3. Contributions: prevent its container from collapsing/clipping */
+    #overview .card:has(#activityContributions) {
+      height: auto !important;
+      min-height: 180px !important;
+      overflow: visible !important;
+    }
+
+    #overview #activityContributions {
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 130px !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    /* 4. HR Zone legend arranged horizontally; wrap on narrow screens */
+    #running .card:has(#cZones)>.chart-legend-note {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      gap: 8px 12px !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    #running .card:has(#cZones)>.chart-legend-note>* {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+    }
+
+    /* 5. Activities values use the same size, including pace */
+    #running #runKpis .kpi {
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    #running #runKpis .kpi .val,
+    #running #runKpis .pace-card .val {
+      font-size: 20px !important;
+      line-height: 1.25 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-overflow: clip !important;
+      overflow: visible !important;
+    }
+
+    /* 6. Keep Dashboard + tabs visible while the document scrolls */
+    /*
+      overflow-x:hidden on an ancestor can interfere with sticky.
+      Use clip without creating a separate scroll container.
+    */
+    html,
+    body,
+    html.is-maximized-mode,
+    html.is-maximized-mode body,
+    html:not(.is-maximized-mode),
+    html:not(.is-maximized-mode) body {
+      overflow-x: clip !important;
+      overflow-y: visible !important;
+    }
+
+    header,
+    html.is-maximized-mode header,
+    html:not(.is-maximized-mode) header {
+      position: sticky !important;
+      top: var(--safe-top) !important;
+      z-index: 100 !important;
+      background-color: var(--bg, #101820) !important;
     }
   }
 }
