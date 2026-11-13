@@ -763,3 +763,114 @@
     }
   }
 }
+
+@supports (-webkit-touch-callout: none) {
+  @media (orientation: portrait) and (max-width: 1024px) {
+
+    /* Dashboard: แถวเดียว ไม่ชนปุ่ม */
+    .brand,
+    .brand> :not(.logo) {
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+
+    .brand> :not(.logo) {
+      flex: 1 1 0 !important;
+    }
+
+    .title {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      font-size: clamp(16px, 4.2vw, 22px) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      overflow-wrap: normal !important;
+    }
+
+    /* Filters: grid ต้องยอมให้ช่องหดได้ */
+    #adaptiveFilters {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    #filterPanel,
+    #adaptiveFilters .afield,
+    #adaptiveFilters .afield>* {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Start date / End date / Activity Type */
+    #adaptiveFilters input,
+    #adaptiveFilters select {
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      padding-inline: 8px !important;
+      box-sizing: border-box !important;
+      font-size: 16px !important;
+    }
+
+    #adaptiveFilters select {
+      padding-right: 28px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    /* Safari date input มี intrinsic width ของตัวเอง */
+    #adaptiveFilters input[type="date"] {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      overflow: hidden !important;
+    }
+
+    #adaptiveFilters input[type="date"]::-webkit-date-and-time-value {
+      min-width: 0 !important;
+      text-align: left !important;
+    }
+
+    #adaptiveFilters input[type="date"]::-webkit-datetime-edit {
+      min-width: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Overall: ข้อมูลใหญ่ขึ้น และข้อความขึ้นบรรทัดใหม่ */
+    #overview .card,
+    #overview .kpi {
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    #overview .kpi {
+      height: auto !important;
+      max-height: none !important;
+    }
+
+    #overview .kpi .val {
+      font-size: 24px !important;
+      line-height: 1.25 !important;
+    }
+
+    #overview .kpi .label,
+    #overview .kpi .sub,
+    #overview .kpi .note,
+    #overview .kpi .val,
+    #overview .card p {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-overflow: clip !important;
+      -webkit-line-clamp: unset !important;
+      line-clamp: unset !important;
+    }
+  }
+}
